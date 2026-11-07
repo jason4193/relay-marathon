@@ -99,7 +99,8 @@ h1 em{font-style:normal;color:var(--accent)}
 .map-card{background:var(--map-bg);border:1px solid var(--line);border-radius:22px;padding:10px;position:relative;overflow:hidden}
 .map-card svg{display:block;width:100%;height:auto;max-height:44vh;margin:0 auto}
 @media (min-width:880px){.map-card svg{max-height:620px}}
-.map-caption{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.85rem;color:var(--muted);padding:6px 8px 2px;font-weight:500}
+.map-caption{display:flex;justify-content:space-between;gap:4px 10px;flex-wrap:wrap;font-size:.85rem;color:var(--muted);padding:6px 8px 2px;font-weight:500}
+.map-note{flex-basis:100%;color:var(--ink)}
 
 .progress-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px 22px}
 .remain{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
@@ -264,7 +265,7 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
         <div class="map-card">
           <svg viewBox="-30 -80 470 490" role="img" aria-labelledby="mapTitle mapDesc">
             <title id="mapTitle">Village Green track loop</title>
-            <desc id="mapDesc">Map of the running loop around the Village Green synthetic field, with the share of the 94 laps already pledged highlighted on the track.</desc>
+            <desc id="mapDesc">Map of the running loop around the Village Green synthetic field, with the share of the 94 laps already pledged highlighted on the track. Start and finish are at the north-west corner. The waiting area with the water station is just inside the track there, and the toilets are in Sam Cracknell Pavilion to the north.</desc>
             <rect class="m-bg" x="-30" y="-80" width="470" height="490"/>
             <!-- lawns -->
             <path class="m-lawn" d="M170 -80 H440 V40 L396 44 L360 30 L150 8 Z"/>
@@ -274,8 +275,9 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
             <path class="m-track" d="M165 16 L118 -80" style="stroke-width:9"/>
             <!-- Sam Cracknell Pavilion -->
             <path class="m-building" d="M34 -56 L106 -50 L102 -8 L30 -14 Z"/>
-            <text class="m-label" x="68" y="-36" text-anchor="middle">Sam Cracknell</text>
-            <text class="m-label" x="68" y="-23" text-anchor="middle">Pavilion</text>
+            <text class="m-label" x="68" y="-39" text-anchor="middle">Sam Cracknell</text>
+            <text class="m-label" x="68" y="-28" text-anchor="middle">Pavilion</text>
+            <text class="m-label" x="68" y="-16" text-anchor="middle" style="font-size:9px;font-weight:500">Toilets</text>
             <!-- multi-purpose courts (west) -->
             <rect class="m-court" x="-22" y="150" width="38" height="78" rx="3"/>
             <rect class="m-court" x="-22" y="234" width="38" height="78" rx="3"/>
@@ -289,7 +291,7 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
             <text class="m-label" x="396" y="296" text-anchor="middle">wall</text>
 
             <!-- track interior -->
-            <path class="m-track-fill" d="M38 200 L38 345 Q38 386 80 386 L280 386 Q304 386 311 358 L388 85 Q398 40 360 36 L140 14 Q80 8 54 45 Q38 68 38 110 Z"/>
+            <path class="m-track-fill" d="M54 45 Q38 68 38 110 L38 345 Q38 386 80 386 L280 386 Q304 386 311 358 L388 85 Q398 40 360 36 L140 14 Q80 8 54 45 Z"/>
             <!-- field -->
             <path class="m-field" d="M130 33 L318 58 L270 364 L68 361 Z"/>
             <path class="m-fline" d="M130 33 L318 58 L270 364 L68 361 Z" style="opacity:.6"/>
@@ -298,32 +300,40 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
             <path class="m-fline" d="M177 39 L271 52 L263 102 L168 91"/>
             <path class="m-fline" d="M128 310 L228 313 L219.5 363 M118.5 362 L128 310"/>
             <text class="m-label-big" x="196" y="250" text-anchor="middle" transform="rotate(4 196 250)">Village Green</text>
-            <!-- outdoor fitness equipment -->
+            <!-- waiting area + water station, inside the track just after the start -->
             <path class="m-court" d="M58 70 L98 74 L93 116 L53 112 Z"/>
+            <g transform="rotate(5 75.5 93)" text-anchor="middle">
+              <text class="m-label" x="75.5" y="89" style="font-size:9px">Waiting</text>
+              <text class="m-label" x="75.5" y="99" style="font-size:9px">area</text>
+              <text class="m-label" x="75.5" y="109" style="font-size:8px;font-weight:500">+ water</text>
+            </g>
             <!-- Moya Dodd Grandstand -->
             <path class="m-building" d="M94 150 L102 150 L70 320 L62 320 Z"/>
             <text class="m-label" transform="translate(80 236) rotate(-79)" text-anchor="middle" style="font-size:9px">Moya Dodd Grandstand</text>
 
             <!-- the loop -->
-            <path id="trackPath" class="m-track-edge" d="M38 200 L38 345 Q38 386 80 386 L280 386 Q304 386 311 358 L388 85 Q398 40 360 36 L140 14 Q80 8 54 45 Q38 68 38 110 Z"/>
-            <path class="m-track" d="M38 200 L38 345 Q38 386 80 386 L280 386 Q304 386 311 358 L388 85 Q398 40 360 36 L140 14 Q80 8 54 45 Q38 68 38 110 Z"/>
-            <path class="m-lane" d="M38 200 L38 345 Q38 386 80 386 L280 386 Q304 386 311 358 L388 85 Q398 40 360 36 L140 14 Q80 8 54 45 Q38 68 38 110 Z"/>
-            <path id="trackProgress" class="m-progress" pathLength="100" stroke-dasharray="0 100" d="M38 200 L38 345 Q38 386 80 386 L280 386 Q304 386 311 358 L388 85 Q398 40 360 36 L140 14 Q80 8 54 45 Q38 68 38 110 Z"/>
+            <path id="trackPath" class="m-track-edge" d="M54 45 Q38 68 38 110 L38 345 Q38 386 80 386 L280 386 Q304 386 311 358 L388 85 Q398 40 360 36 L140 14 Q80 8 54 45 Z"/>
+            <path class="m-track" d="M54 45 Q38 68 38 110 L38 345 Q38 386 80 386 L280 386 Q304 386 311 358 L388 85 Q398 40 360 36 L140 14 Q80 8 54 45 Z"/>
+            <path class="m-lane" d="M54 45 Q38 68 38 110 L38 345 Q38 386 80 386 L280 386 Q304 386 311 358 L388 85 Q398 40 360 36 L140 14 Q80 8 54 45 Z"/>
+            <path id="trackProgress" class="m-progress" pathLength="100" stroke-dasharray="0 100" d="M54 45 Q38 68 38 110 L38 345 Q38 386 80 386 L280 386 Q304 386 311 358 L388 85 Q398 40 360 36 L140 14 Q80 8 54 45 Z"/>
 
-            <!-- start / finish -->
+            <!-- start / finish: north-west corner, line drawn across the track (track heading ≈125°, so rotate 35°) -->
             <g aria-hidden="true">
-              <rect class="m-ink" x="28" y="197" width="5" height="5"/>
-              <rect class="m-paper" x="33" y="197" width="5" height="5"/>
-              <rect class="m-ink" x="38" y="197" width="5" height="5"/>
-              <rect class="m-paper" x="43" y="197" width="5" height="5"/>
-              <rect class="m-paper" x="28" y="202" width="5" height="5"/>
-              <rect class="m-ink" x="33" y="202" width="5" height="5"/>
-              <rect class="m-paper" x="38" y="202" width="5" height="5"/>
-              <rect class="m-ink" x="43" y="202" width="5" height="5"/>
-              <text class="m-start-label" x="-26" y="135" transform="rotate(-90 -6 140)">START / FINISH</text>
+              <g transform="translate(54 45) rotate(35)">
+                <rect class="m-ink" x="-10" y="-5" width="5" height="5"/>
+                <rect class="m-paper" x="-5" y="-5" width="5" height="5"/>
+                <rect class="m-ink" x="0" y="-5" width="5" height="5"/>
+                <rect class="m-paper" x="5" y="-5" width="5" height="5"/>
+                <rect class="m-paper" x="-10" y="0" width="5" height="5"/>
+                <rect class="m-ink" x="-5" y="0" width="5" height="5"/>
+                <rect class="m-paper" x="0" y="0" width="5" height="5"/>
+                <rect class="m-ink" x="5" y="0" width="5" height="5"/>
+              </g>
+              <text class="m-start-label" x="38" y="22" text-anchor="end">START /</text>
+              <text class="m-start-label" x="38" y="35" text-anchor="end">FINISH</text>
             </g>
             <!-- runner -->
-            <circle id="runner" class="m-runner" r="6.5" cx="0" cy="0" transform="translate(38 200)">
+            <circle id="runner" class="m-runner" r="6.5" cx="0" cy="0" transform="translate(54 45)">
               <animateMotion id="runnerMotion" dur="18s" repeatCount="indefinite" begin="indefinite">
                 <mpath href="#trackPath"/>
               </animateMotion>
@@ -337,6 +347,7 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
           <figcaption class="map-caption">
             <span>Village Green loop, run anticlockwise</span>
             <span class="num">1 lap ≈ 449 m · 94 laps = 42.195 km</span>
+            <span class="map-note">Start at the north-west corner. Wait at the waiting area just inside the track (water station there). Toilets in Sam Cracknell Pavilion.</span>
           </figcaption>
         </div>
       </figure>
@@ -498,7 +509,7 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if(!reduce){
     var runner=$("runner"), motion=$("runnerMotion");
-    try{ runner.removeAttribute("transform"); motion.beginElement(); }catch(e){ runner.setAttribute("transform","translate(38 200)"); }
+    try{ runner.removeAttribute("transform"); motion.beginElement(); }catch(e){ runner.setAttribute("transform","translate(54 45)"); }
   }
 
   /* ---------- confirmed date ---------- */
