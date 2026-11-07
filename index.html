@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>December Relay Marathon</title>
+<meta name="description" content="Relay marathon on the Village Green track, UNSW Kensington. 94 laps, one leg at a time. RSVP with your preferred date and laps.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='7' width='26' height='18' rx='9' fill='none' stroke='%231c5bd0' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: race-bib sports poster. Hero pairs the event block with the
+   real Village Green loop; then the start list; then the entry form. */
+:root{
+  --bg:#f2f4f0;
+  --surface:#ffffff;
+  --ink:#13212c;
+  --muted:#5a6770;
+  --line:#dbe1da;
+  --accent:#1c5bd0;
+  --accent-ink:#ffffff;
+  --tbc:#a65b00;
+  --good:#2f7d3a;
+  --bad:#b3261e;
+  /* map */
+  --map-bg:#ebe8e2;
+  --map-lawn:#cfe5c3;
+  --map-field:#cddf7c;
+  --map-field-line:#eef5cf;
+  --map-track:#b4d0ec;
+  --map-track-edge:#8fb3da;
+  --map-court:#93b8e6;
+  --map-building:#d4d2cd;
+  --map-label:#3d4a52;
+  --font-display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --font-body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f161d; --surface:#17212b; --ink:#e8eef2; --muted:#9aa8b2; --line:#2a3743;
+    --accent:#5b93f5; --accent-ink:#0b1320; --tbc:#f0a54a; --good:#6cc47a; --bad:#ff8a80;
+    --map-bg:#1a232d; --map-lawn:#1f3326; --map-field:#3f5a26; --map-field-line:#5f7c43;
+    --map-track:#2f4d6d; --map-track-edge:#3d6189; --map-court:#2c4c78; --map-building:#2c3640; --map-label:#b8c4cc;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f161d; --surface:#17212b; --ink:#e8eef2; --muted:#9aa8b2; --line:#2a3743;
+  --accent:#5b93f5; --accent-ink:#0b1320; --tbc:#f0a54a; --good:#6cc47a; --bad:#ff8a80;
+  --map-bg:#1a232d; --map-lawn:#1f3326; --map-field:#3f5a26; --map-field-line:#5f7c43;
+  --map-track:#2f4d6d; --map-track-edge:#3d6189; --map-court:#2c4c78; --map-building:#2c3640; --map-label:#b8c4cc;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0;line-height:.95;letter-spacing:.005em}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+.num{font-variant-numeric:tabular-nums}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+/* top bar */
+.topbar{border-bottom:1px solid var(--line);background:var(--surface)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:52px}
+.brand{font-family:var(--font-display);font-weight:700;font-size:1.15rem;text-transform:uppercase;letter-spacing:.06em}
+.brand span{color:var(--accent)}
+.topbar nav{display:flex;gap:18px;font-weight:600;font-size:.95rem}
+.topbar nav a{color:var(--ink);text-decoration:none}
+.topbar nav a:hover{color:var(--accent)}
+
+/* hero */
+.hero{padding:28px 0 48px}
+.hero-grid{display:grid;gap:20px;grid-template-areas:"title" "map" "progress" "cta"}
+.hero-title{grid-area:title}
+.hero-map{grid-area:map}
+.hero-progress{grid-area:progress}
+.hero-cta{grid-area:cta}
+@media (min-width:880px){
+  .hero{padding:48px 0 64px}
+  .hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);grid-template-areas:"title map" "progress map" "cta map";column-gap:48px;row-gap:26px;align-items:start}
+  .hero-map{align-self:center}
+}
+.eyebrow{font-weight:600;color:var(--muted);font-size:.95rem;margin:0 0 10px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--muted)}
+h1{font-size:clamp(2.7rem,8vw,5rem);font-weight:800;text-transform:uppercase}
+h1 em{font-style:normal;color:var(--accent)}
+.lede{max-width:46ch;margin:14px 0 0;color:var(--muted);font-size:1.05rem}
+.dates{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;align-items:center}
+.date-chip{font-family:var(--font-display);font-weight:700;font-size:1.05rem;letter-spacing:.02em;text-transform:uppercase;padding:6px 12px;border:1.5px solid var(--ink);border-radius:8px;line-height:1.1}
+.tbc{font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--tbc);border:1.5px dashed var(--tbc);padding:4px 9px;border-radius:999px}
+.confirmed{font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--good);border:1.5px solid var(--good);padding:4px 9px;border-radius:999px}
+
+.map-card{background:var(--map-bg);border:1px solid var(--line);border-radius:22px;padding:10px;position:relative;overflow:hidden}
+.map-card svg{display:block;width:100%;height:auto;max-height:44vh;margin:0 auto}
+@media (min-width:880px){.map-card svg{max-height:620px}}
+.map-caption{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.85rem;color:var(--muted);padding:6px 8px 2px;font-weight:500}
+
+.progress-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px 22px}
+.remain{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.remain-num{font-family:var(--font-display);font-weight:800;font-size:clamp(3.4rem,9vw,4.6rem);line-height:.85;color:var(--accent)}
+.remain-label{font-family:var(--font-display);font-weight:700;font-size:1.5rem;text-transform:uppercase;line-height:1}
+.remain-sub{color:var(--muted);margin:8px 0 14px;font-size:.98rem}
+.bar{position:relative;height:18px;border-radius:999px;background:var(--line);overflow:hidden}
+.bar-fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--accent);border-radius:999px;transition:width .6s ease}
+.bar-ticks{position:absolute;inset:0;background-image:repeating-linear-gradient(to right,transparent 0,transparent calc(100% * 10 / 94 - 2px),color-mix(in srgb,var(--surface) 75%,transparent) calc(100% * 10 / 94 - 2px),color-mix(in srgb,var(--surface) 75%,transparent) calc(100% * 10 / 94))}
+@media (prefers-reduced-motion: reduce){.bar-fill{transition:none}}
+.bar-scale{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:6px;font-weight:600}
+.sync{font-size:.85rem;color:var(--muted);margin-top:10px;min-height:1.3em}
+.sync.warn{color:var(--tbc)}
+
+.btn{appearance:none;border:0;cursor:pointer;font:inherit;border-radius:12px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none}
+.btn:disabled{cursor:not-allowed;opacity:.5}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-primary:hover{filter:brightness(1.07)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;filter:none}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--ink)}
+.btn-danger{background:transparent;color:var(--bad);border:1.5px solid color-mix(in srgb,var(--bad) 45%,transparent)}
+.btn-danger.armed{background:var(--bad);color:#fff;border-color:var(--bad)}
+.cta-big{font-family:var(--font-display);font-weight:800;font-size:clamp(1.7rem,4.6vw,2.2rem);text-transform:uppercase;letter-spacing:.02em;padding:18px 34px;border-radius:16px;width:100%;box-shadow:0 10px 24px -12px color-mix(in srgb,var(--accent) 70%,transparent)}
+@media (min-width:560px){.cta-big{width:auto;min-width:320px}}
+.cta-big svg{width:26px;height:26px}
+.cta-note{color:var(--muted);font-size:.9rem;margin:10px 0 0}
+
+/* sections */
+section.block{padding:56px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+h2{font-size:clamp(2rem,5vw,2.8rem);font-weight:800;text-transform:uppercase}
+.sec-sub{color:var(--muted);margin:6px 0 0}
+
+.tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:22px}
+.tally-cell{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;position:relative}
+.tally-cell.top{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.tally-day{font-family:var(--font-display);font-weight:700;font-size:1.25rem;text-transform:uppercase;line-height:1}
+.tally-meta{font-size:.88rem;color:var(--muted)}
+.tally-bar{height:6px;border-radius:999px;background:var(--line);overflow:hidden;margin-top:4px}
+.tally-bar i{display:block;height:100%;background:var(--accent);border-radius:999px}
+.pill{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:var(--accent);color:var(--accent-ink);align-self:flex-start}
+
+.list{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.list-head,.row{display:grid;grid-template-columns:64px minmax(0,1fr) 150px 140px 150px;gap:12px;align-items:center;padding:12px 18px}
+.list-head{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}
+.row+.row{border-top:1px solid var(--line)}
+.bib{font-family:var(--font-display);font-weight:800;font-size:1.15rem;border:2px solid var(--ink);border-radius:6px;padding:2px 0;text-align:center;width:50px;line-height:1.1}
+.r-name{font-weight:600;overflow-wrap:anywhere;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.you{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:1px 7px;border-radius:999px;border:1.5px solid var(--accent);color:var(--accent)}
+.r-date{font-weight:500}
+.r-laps{font-weight:600}
+.r-laps small{display:block;color:var(--muted);font-weight:500;font-size:.82rem}
+.r-actions{display:flex;gap:6px;justify-content:flex-end}
+.r-actions .btn{padding:6px 10px;font-size:.85rem;border-radius:9px}
+.empty{padding:34px 20px;text-align:center;color:var(--muted)}
+.empty strong{display:block;color:var(--ink);font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;margin-bottom:4px}
+.list-head .h-actions{text-align:right}
+.list.no-actions .list-head,.list.no-actions .row{grid-template-columns:64px minmax(0,1fr) 150px 140px}
+.list.no-actions .h-actions,.list.no-actions .r-actions{display:none}
+@media (max-width:700px){
+  .list-head{display:none}
+  .row,.list.no-actions .row{grid-template-columns:58px minmax(0,1fr) auto;grid-template-areas:"bib name laps" "bib date laps" "act act act";row-gap:2px;padding:14px 16px}
+  .row .bib{grid-area:bib}
+  .row .r-name{grid-area:name}
+  .row .r-date{grid-area:date;color:var(--muted);font-size:.92rem}
+  .row .r-laps{grid-area:laps;text-align:right}
+  .row .r-actions{grid-area:act;justify-content:flex-start;margin-top:8px}
+  .row .r-actions:empty{display:none}
+}
+
+/* form */
+.form-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(20px,4vw,32px);max-width:680px;position:relative}
+.form-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.form-top h3{font-size:1.7rem;font-weight:800;text-transform:uppercase}
+.form-top .btn{padding:8px 14px;font-size:.92rem}
+.field{display:flex;flex-direction:column;gap:8px;margin-bottom:22px;border:0;padding:0;min-width:0}
+.field>label,.field legend{font-weight:700;font-size:.95rem;padding:0}
+.hint{color:var(--muted);font-size:.88rem;font-weight:400}
+input[type=text],input[type=number]{font:inherit;font-size:1.05rem;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;width:100%}
+input[type=text]:focus,input[type=number]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+.date-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px}
+.date-opt{position:relative}
+.date-opt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.date-opt span{display:flex;flex-direction:column;align-items:flex-start;gap:0;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg);cursor:pointer;height:100%}
+.date-opt b{font-family:var(--font-display);font-weight:700;font-size:1.3rem;text-transform:uppercase;line-height:1.05}
+.date-opt small{color:var(--muted);font-size:.82rem}
+.date-opt input:checked+span{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface));box-shadow:inset 0 0 0 1px var(--accent)}
+.date-opt input:focus-visible+span{outline:3px solid var(--accent);outline-offset:2px}
+.date-opt input:disabled+span{opacity:.55;cursor:not-allowed}
+.stepper{display:flex;align-items:stretch;gap:8px;max-width:300px}
+.stepper .btn{width:52px;font-size:1.5rem;font-weight:700;background:var(--bg);border:1.5px solid var(--line);color:var(--ink);border-radius:12px}
+.stepper .btn:hover{border-color:var(--ink)}
+.stepper input{text-align:center;font-family:var(--font-display);font-weight:800;font-size:1.6rem;padding:8px}
+.laps-km{color:var(--muted);font-size:.92rem}
+.form-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.form-actions .btn-primary{font-family:var(--font-display);font-weight:800;font-size:1.35rem;text-transform:uppercase;padding:14px 28px;border-radius:14px}
+.form-actions .btn-ghost,.form-actions .btn-danger{padding:12px 18px}
+.msg{margin-top:14px;font-weight:600;min-height:1.5em}
+.msg.ok{color:var(--good)}
+.msg.err{color:var(--bad)}
+.field-err{color:var(--bad);font-size:.88rem;font-weight:600;min-height:0}
+.field-err:empty{display:none}
+/* honeypot: off-screen, out of the tab order, hidden from screen readers */
+.hp{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+
+footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px solid var(--line)}
+
+/* svg map */
+.m-bg{fill:var(--map-bg)}
+.m-lawn{fill:var(--map-lawn)}
+.m-field{fill:var(--map-field)}
+.m-fline{fill:none;stroke:var(--map-field-line);stroke-width:1.6}
+.m-court{fill:var(--map-court)}
+.m-court-line{fill:none;stroke:var(--map-bg);stroke-width:1.2;opacity:.7}
+.m-building{fill:var(--map-building)}
+.m-track-edge{fill:none;stroke:var(--map-track-edge);stroke-width:19;stroke-linejoin:round}
+.m-track{fill:none;stroke:var(--map-track);stroke-width:16;stroke-linejoin:round}
+.m-track-fill{fill:var(--map-lawn)}
+.m-lane{fill:none;stroke:var(--map-bg);stroke-width:1;stroke-dasharray:4 5;opacity:.85}
+.m-progress{fill:none;stroke:var(--accent);stroke-width:7;stroke-linecap:round;stroke-linejoin:round;transition:stroke-dasharray .8s ease}
+@media (prefers-reduced-motion: reduce){.m-progress{transition:none}}
+.m-runner{fill:var(--surface);stroke:var(--accent);stroke-width:3.5}
+.m-label{fill:var(--map-label);font-family:var(--font-body);font-weight:600;font-size:10px}
+.m-label-big{fill:var(--map-label);font-family:var(--font-display);font-weight:800;font-size:20px;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
+.m-start-label{fill:var(--ink);font-family:var(--font-display);font-weight:800;font-size:12px;letter-spacing:.06em}
+.m-ink{fill:var(--ink)}
+.m-paper{fill:var(--surface)}
+</style>
+<script src="config.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">Relay <span>·</span> Dec 2026</div>
+    <nav aria-label="Sections">
+      <a href="#runners">Runners</a>
+      <a href="#rsvp">RSVP</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- 1. Hero -->
+  <section class="hero" aria-labelledby="title">
+    <div class="wrap hero-grid">
+      <div class="hero-title">
+        <p class="eyebrow">Village Green track <span class="dot" aria-hidden="true"></span> UNSW Kensington</p>
+        <h1 id="title">December Relay <em>Marathon</em></h1>
+        <p class="lede">Run as many laps as you like. Together we cover the full 42.2&nbsp;km: 94 laps of the Village Green loop, one leg at a time.</p>
+        <div class="dates" id="heroDates" aria-label="Possible dates">
+          <span class="date-chip">Sat 5</span>
+          <span class="date-chip">Sun 6</span>
+          <span class="date-chip">Sat 12</span>
+          <span class="date-chip">Sun 13 Dec</span>
+          <span class="tbc">Date TBC</span>
+        </div>
+      </div>
+
+      <figure class="hero-map" style="margin:0">
+        <div class="map-card">
+          <svg viewBox="-30 -80 470 490" role="img" aria-labelledby="mapTitle mapDesc">
+            <title id="mapTitle">Village Green track loop</title>
+            <desc id="mapDesc">Map of the running loop around the Village Green synthetic field, with the share of the 94 laps already pledged highlighted on the track.</desc>
+            <rect class="m-bg" x="-30" y="-80" width="470" height="490"/>
+            <!-- lawns -->
+            <path class="m-lawn" d="M170 -80 H440 V40 L396 44 L360 30 L150 8 Z"/>
+            <path class="m-lawn" d="M338 40 H440 V410 H300 L320 330 Z"/>
+            <!-- connector path to University Mall -->
+            <path class="m-track-edge" d="M165 16 L118 -80" style="stroke-width:12"/>
+            <path class="m-track" d="M165 16 L118 -80" style="stroke-width:9"/>
+            <!-- Sam Cracknell Pavilion -->
+            <path class="m-building" d="M34 -56 L106 -50 L102 -8 L30 -14 Z"/>
+            <text class="m-label" x="68" y="-36" text-anchor="middle">Sam Cracknell</text>
+            <text class="m-label" x="68" y="-23" text-anchor="middle">Pavilion</text>
+            <!-- multi-purpose courts (west) -->
+            <rect class="m-court" x="-22" y="150" width="38" height="78" rx="3"/>
+            <rect class="m-court" x="-22" y="234" width="38" height="78" rx="3"/>
+            <rect class="m-court-line" x="-17" y="156" width="28" height="66" rx="2"/>
+            <rect class="m-court-line" x="-17" y="240" width="28" height="66" rx="2"/>
+            <!-- Pick-up & Play court (east) -->
+            <path class="m-court" d="M372 150 L414 152 L410 232 L366 230 Z"/>
+            <text class="m-label" x="390" y="248" text-anchor="middle">Pick-up</text>
+            <text class="m-label" x="390" y="260" text-anchor="middle">&amp; Play</text>
+            <text class="m-label" x="396" y="284" text-anchor="middle">Bouldering</text>
+            <text class="m-label" x="396" y="296" text-anchor="middle">wall</text>
+
+            <!-- track interior -->
+            <path class="m-track-fill" d="M38 200 L38 345 Q38 386 80 386 L280 386 Q304 386 311 358 L388 85 Q398 40 360 36 L140 14 Q80 8 54 45 Q38 68 38 110 Z"/>
+            <!-- field -->
+            <path class="m-field" d="M130 33 L318 58 L270 364 L68 361 Z"/>
+            <path class="m-fline" d="M130 33 L318 58 L270 364 L68 361 Z" style="opacity:.6"/>
+            <path class="m-fline" d="M99 197 L294 211"/>
+            <ellipse class="m-fline" cx="196.5" cy="204" rx="30" ry="30"/>
+            <path class="m-fline" d="M177 39 L271 52 L263 102 L168 91"/>
+            <path class="m-fline" d="M128 310 L228 313 L219.5 363 M118.5 362 L128 310"/>
+            <text class="m-label-big" x="196" y="250" text-anchor="middle" transform="rotate(4 196 250)">Village Green</text>
+            <!-- outdoor fitness equipment -->
+            <path class="m-court" d="M58 70 L98 74 L93 116 L53 112 Z"/>
+            <!-- Moya Dodd Grandstand -->
+            <path class="m-building" d="M94 150 L102 150 L70 320 L62 320 Z"/>
+            <text class="m-label" transform="translate(80 236) rotate(-79)" text-anchor="middle" style="font-size:9px">Moya Dodd Grandstand</text>
+
+            <!-- the loop -->
+            <path id="trackPath" class="m-track-edge" d="M38 200 L38 345 Q38 386 80 386 L280 386 Q304 386 311 358 L388 85 Q398 40 360 36 L140 14 Q80 8 54 45 Q38 68 38 110 Z"/>
+            <path class="m-track" d="M38 200 L38 345 Q38 386 80 386 L280 386 Q304 386 311 358 L388 85 Q398 40 360 36 L140 14 Q80 8 54 45 Q38 68 38 110 Z"/>
+            <path class="m-lane" d="M38 200 L38 345 Q38 386 80 386 L280 386 Q304 386 311 358 L388 85 Q398 40 360 36 L140 14 Q80 8 54 45 Q38 68 38 110 Z"/>
+            <path id="trackProgress" class="m-progress" pathLength="100" stroke-dasharray="0 100" d="M38 200 L38 345 Q38 386 80 386 L280 386 Q304 386 311 358 L388 85 Q398 40 360 36 L140 14 Q80 8 54 45 Q38 68 38 110 Z"/>
+
+            <!-- start / finish -->
+            <g aria-hidden="true">
+              <rect class="m-ink" x="28" y="197" width="5" height="5"/>
+              <rect class="m-paper" x="33" y="197" width="5" height="5"/>
+              <rect class="m-ink" x="38" y="197" width="5" height="5"/>
+              <rect class="m-paper" x="43" y="197" width="5" height="5"/>
+              <rect class="m-paper" x="28" y="202" width="5" height="5"/>
+              <rect class="m-ink" x="33" y="202" width="5" height="5"/>
+              <rect class="m-paper" x="38" y="202" width="5" height="5"/>
+              <rect class="m-ink" x="43" y="202" width="5" height="5"/>
+              <text class="m-start-label" x="-26" y="135" transform="rotate(-90 -6 140)">START / FINISH</text>
+            </g>
+            <!-- runner -->
+            <circle id="runner" class="m-runner" r="6.5" cx="0" cy="0" transform="translate(38 200)">
+              <animateMotion id="runnerMotion" dur="18s" repeatCount="indefinite" begin="indefinite">
+                <mpath href="#trackPath"/>
+              </animateMotion>
+            </circle>
+            <!-- north -->
+            <g transform="translate(410 380)" aria-hidden="true">
+              <path class="m-ink" d="M0 -16 L6 0 L0 -4 L-6 0 Z"/>
+              <text class="m-label" x="0" y="13" text-anchor="middle" style="font-weight:700">N</text>
+            </g>
+          </svg>
+          <figcaption class="map-caption">
+            <span>Village Green loop, run anticlockwise</span>
+            <span class="num">1 lap ≈ 449 m · 94 laps = 42.195 km</span>
+          </figcaption>
+        </div>
+      </figure>
+
+      <div class="hero-progress">
+        <div class="progress-card">
+          <div class="remain">
+            <span class="remain-num num" id="remainNum">94</span>
+            <span class="remain-label" id="remainLabel">laps to go</span>
+          </div>
+          <p class="remain-sub num" id="remainSub">0 of 94 laps pledged so far.</p>
+          <div class="bar" id="bar" role="progressbar" aria-label="Laps pledged" aria-valuemin="0" aria-valuemax="94" aria-valuenow="0">
+            <div class="bar-fill" id="barFill"></div>
+            <div class="bar-ticks" aria-hidden="true"></div>
+          </div>
+          <div class="bar-scale num" aria-hidden="true"><span>0</span><span>47 · half</span><span>94 laps</span></div>
+          <p class="sync" id="sync" aria-live="polite">Loading RSVPs…</p>
+        </div>
+      </div>
+
+      <div class="hero-cta">
+        <a class="btn btn-primary cta-big" href="#rsvp" id="ctaBtn">
+          Count me in!
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M5 12l7 7 7-7"/></svg>
+        </a>
+        <p class="cta-note" id="ctaNote">Pick the date that suits you and roughly how many laps you'll run.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Runners -->
+  <section class="block" id="runners" aria-labelledby="runnersTitle">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <h2 id="runnersTitle">Who's running</h2>
+          <p class="sec-sub num" id="runnersSub">Loading the start list…</p>
+        </div>
+      </div>
+      <div class="tally" id="tally" aria-label="Votes per date"></div>
+      <div class="list no-actions" id="list">
+        <div class="list-head" aria-hidden="true">
+          <span>Bib</span><span>Runner</span><span>Preferred date</span><span>Est. laps</span><span class="h-actions"></span>
+        </div>
+        <div id="rows"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. RSVP -->
+  <section class="block" id="rsvp" aria-labelledby="rsvpTitle">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <h2 id="rsvpTitle">RSVP</h2>
+          <p class="sec-sub">One entry per person. You can change it any time before the day.</p>
+        </div>
+      </div>
+      <form class="form-card" id="form" novalidate>
+        <div class="form-top">
+          <h3 id="formHeading">Count me in</h3>
+          <button type="button" class="btn btn-ghost" id="otherBtn" hidden>Sign up someone else</button>
+        </div>
+
+        <div class="field">
+          <label for="rsvp-name" id="nameLabel">Your name</label>
+          <input type="text" id="rsvp-name" name="name" maxlength="40" autocomplete="name" placeholder="e.g. Sam L." aria-describedby="name-hint err-name">
+          <span class="hint" id="name-hint">The list is public, so a first name or nickname is fine.</span>
+          <span class="field-err" id="err-name"></span>
+        </div>
+
+        <fieldset class="field" id="dateField">
+          <legend>Preferred date <span class="hint">· final date to be confirmed</span></legend>
+          <div class="date-opts" id="dateOpts"></div>
+          <span class="field-err" id="err-date"></span>
+        </fieldset>
+
+        <div class="field">
+          <label for="rsvp-laps">Estimated laps <span class="hint">· a guess is fine</span></label>
+          <div class="stepper">
+            <button type="button" class="btn" id="lapsMinus" aria-label="One lap fewer">−</button>
+            <input type="number" id="rsvp-laps" name="laps" min="1" max="94" step="1" inputmode="numeric" value="4" aria-describedby="lapsKm err-laps">
+            <button type="button" class="btn" id="lapsPlus" aria-label="One lap more">+</button>
+          </div>
+          <span class="laps-km num" id="lapsKm">≈ 1.8 km</span>
+          <span class="field-err" id="err-laps"></span>
+        </div>
+
+        <div class="hp" aria-hidden="true">
+          <label for="rsvp-website">Website</label>
+          <input type="text" id="rsvp-website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="submitBtn">Save my RSVP</button>
+          <button type="button" class="btn btn-ghost" id="cancelBtn" hidden>Cancel</button>
+          <button type="button" class="btn btn-danger" id="removeBtn" hidden>Remove me</button>
+        </div>
+        <p class="msg" id="msg" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap" id="footerText">December Relay Marathon · Village Green, UNSW Kensington · Date to be confirmed from the RSVPs.</div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var CFG = window.RELAY_CONFIG || {};
+  var API_URL = typeof CFG.API_URL === "string" ? CFG.API_URL.trim() : "";
+  var TOTAL = 94;
+  var LAP_KM = 42.195 / TOTAL;
+  var POLL_MS = 30000;      // re-read while the tab is visible
+  var SLOW_MS = 10000;      // show "can't reach" if a read takes longer than this
+  var ABORT_MS = 30000;     // give up on a read entirely
+  var MINE_KEY = "relay2026.mine";
+  // Keep in sync with DATES in apps-script/Code.gs.
+  var DATES = [
+    {id:"2026-12-05", big:"Sat 5", small:"December", label:"Sat 5 Dec", long:"Saturday 5 December"},
+    {id:"2026-12-06", big:"Sun 6", small:"December", label:"Sun 6 Dec", long:"Sunday 6 December"},
+    {id:"2026-12-12", big:"Sat 12", small:"December", label:"Sat 12 Dec", long:"Saturday 12 December"},
+    {id:"2026-12-13", big:"Sun 13", small:"December", label:"Sun 13 Dec", long:"Sunday 13 December"},
+    {id:"any", big:"Any", small:"Any of these works", label:"Any date", long:"Any date"}
+  ];
+  var CONFIRMED = null;
+  DATES.forEach(function(d){ if(d.id !== "any" && d.id === CFG.CONFIRMED_DATE) CONFIRMED = d; });
+
+  var S = {
+    rsvps: [], status: "loading",   // loading | live | slow | noconfig
+    target: "auto",                 // "auto" (first own entry, else new) | "new" | an own entry id
+    formFor: undefined, dirty: false, forceFill: false, saving: false
+  };
+  function $(id){ return document.getElementById(id); }
+  function el(tag, cls, text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
+  function km(laps){ return (laps*LAP_KM).toFixed(1); }
+  function dateLabel(id){ for(var i=0;i<DATES.length;i++) if(DATES[i].id===id) return DATES[i].label; return "Any date"; }
+  function findRsvp(id){ for(var i=0;i<S.rsvps.length;i++) if(S.rsvps[i].id===id) return S.rsvps[i]; return null; }
+
+  /* ---------- own entries (this device) ---------- */
+  function loadMine(){
+    try{
+      var v = JSON.parse(localStorage.getItem(MINE_KEY) || "[]");
+      if(!Array.isArray(v)) return [];
+      return v.filter(function(m){ return m && typeof m.id==="string" && typeof m.editToken==="string"; });
+    }catch(_){ return []; }
+  }
+  var mine = loadMine();
+  function saveMine(){ try{ localStorage.setItem(MINE_KEY, JSON.stringify(mine)); }catch(_){} }
+  function isMine(id){ return mine.some(function(m){ return m.id===id; }); }
+  function tokenFor(id){ for(var i=0;i<mine.length;i++) if(mine[i].id===id) return mine[i].editToken; return ""; }
+  function addMine(id, token){ mine = mine.filter(function(m){ return m.id!==id; }); mine.push({id:id, editToken:token}); saveMine(); }
+  function dropMine(id){ mine = mine.filter(function(m){ return m.id!==id; }); saveMine(); }
+  function ownInList(){ return S.rsvps.filter(function(r){ return isMine(r.id); }); }
+
+  /* ---------- runner animation ---------- */
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(!reduce){
+    var runner=$("runner"), motion=$("runnerMotion");
+    try{ runner.removeAttribute("transform"); motion.beginElement(); }catch(e){ runner.setAttribute("transform","translate(38 200)"); }
+  }
+
+  /* ---------- confirmed date ---------- */
+  if(CONFIRMED){
+    var hd=$("heroDates"); hd.textContent=""; hd.setAttribute("aria-label","Event date");
+    hd.appendChild(el("span","date-chip",CONFIRMED.label));
+    hd.appendChild(el("span","confirmed","Date confirmed"));
+    $("dateField").hidden=true;
+    $("ctaNote").textContent="Tell us roughly how many laps you'll run on "+CONFIRMED.long+".";
+    $("footerText").textContent="December Relay Marathon · Village Green, UNSW Kensington · "+CONFIRMED.long+".";
+  }
+
+  /* ---------- date options ---------- */
+  var dateOpts=$("dateOpts");
+  DATES.forEach(function(d){
+    var lab=el("label","date-opt");
+    var inp=document.createElement("input");
+    inp.type="radio"; inp.name="date"; inp.value=d.id; inp.id="date-"+d.id;
+    var sp=el("span");
+    sp.appendChild(el("b",null,d.big));
+    sp.appendChild(el("small",null,d.small));
+    lab.appendChild(inp); lab.appendChild(sp);
+    dateOpts.appendChild(lab);
+    inp.addEventListener("change",function(){ S.dirty=true; $("err-date").textContent=""; });
+  });
+  function setDate(v){ var inputs=dateOpts.querySelectorAll("input"); for(var i=0;i<inputs.length;i++) inputs[i].checked = inputs[i].value===v; }
+  function getDate(){ if(CONFIRMED) return CONFIRMED.id; var c=dateOpts.querySelector("input:checked"); return c?c.value:null; }
+
+  /* ---------- laps stepper ---------- */
+  var lapsIn=$("rsvp-laps");
+  function readLaps(){ var v=String(lapsIn.value).trim(); if(!/^\d+$/.test(v)) return NaN; return Number(v); }
+  function updateKm(){ var n=readLaps(); $("lapsKm").textContent = (n>=1 && n<=TOTAL) ? "≈ "+km(n)+" km" : "Enter between 1 and "+TOTAL+" laps"; }
+  $("lapsMinus").addEventListener("click",function(){ var n=readLaps(); lapsIn.value=Math.min(TOTAL,Math.max(1,(n||2)-1)); S.dirty=true; updateKm(); $("err-laps").textContent=""; });
+  $("lapsPlus").addEventListener("click",function(){ var n=readLaps(); lapsIn.value=Math.min(TOTAL,Math.max(1,(n||0)+1)); S.dirty=true; updateKm(); $("err-laps").textContent=""; });
+  lapsIn.addEventListener("input",function(){ S.dirty=true; updateKm(); $("err-laps").textContent=""; });
+  $("rsvp-name").addEventListener("input",function(){ S.dirty=true; $("err-name").textContent=""; });
+
+  /* ---------- CTA jump ---------- */
+  $("ctaBtn").addEventListener("click",function(e){
+    e.preventDefault();
+    $("rsvp").scrollIntoView({behavior: reduce?"auto":"smooth", block:"start"});
+    setTimeout(function(){ try{ $("rsvp-name").focus({preventScroll:true}); }catch(_){} }, reduce?0:450);
+  });
+
+  /* ---------- data cleaning (never trust the payload) ---------- */
+  function clean(x){
+    x = x || {};
+    var laps=Math.round(Number(x.laps));
+    var date = DATES.some(function(t){ return t.id===x.date; }) ? x.date : "any";
+    var t = typeof x.createdAt==="number" ? x.createdAt : Date.parse(x.createdAt);
+    return {
+      id: typeof x.id==="string" ? x.id : String(x.id||""),
+      name: typeof x.name==="string" ? x.name.replace(/\s+/g," ").trim().slice(0,40) : "",
+      date: date,
+      laps: Number.isFinite(laps) ? Math.min(Math.max(laps,0),TOTAL) : 0,
+      createdAt: Number.isFinite(t) ? t : 0
+    };
+  }
+  function sortList(list){
+    return list.filter(function(r){ return r.id && r.name && r.laps>0; })
+      .sort(function(a,b){ return (a.createdAt-b.createdAt) || (a.id<b.id?-1:a.id>b.id?1:0); });
+  }
+  function upsertLocal(raw){
+    var r=clean(raw); if(!r.id) return;
+    var next=S.rsvps.filter(function(x){ return x.id!==r.id; }); next.push(r);
+    S.rsvps=sortList(next);
+  }
+  function removeLocal(id){ S.rsvps=S.rsvps.filter(function(r){ return r.id!==id; }); }
+
+  /* ---------- render: progress ---------- */
+  function renderProgress(){
+    var pledged=S.rsvps.reduce(function(a,r){return a+r.laps;},0);
+    var remaining=Math.max(0,TOTAL-pledged);
+    var pct=Math.min(100,pledged/TOTAL*100);
+    var n=S.rsvps.length;
+    if(remaining>0){
+      $("remainNum").textContent=remaining;
+      $("remainLabel").textContent= remaining===1 ? "lap to go" : "laps to go";
+      $("remainSub").textContent= n ? (pledged+" of "+TOTAL+" laps pledged by "+n+(n===1?" runner":" runners")+" · "+km(pledged)+" of 42.2 km.") : ("0 of "+TOTAL+" laps pledged so far.");
+    }else{
+      $("remainNum").textContent="0";
+      $("remainLabel").textContent="laps to go";
+      var extra=pledged-TOTAL;
+      $("remainSub").textContent="Marathon covered by "+n+" runners"+(extra>0?(", plus "+extra+" bonus "+(extra===1?"lap":"laps")):"")+".";
+    }
+    $("barFill").style.width=pct+"%";
+    $("bar").setAttribute("aria-valuenow",String(Math.min(pledged,TOTAL)));
+    $("bar").setAttribute("aria-valuetext",pledged+" of "+TOTAL+" laps pledged");
+    $("trackProgress").setAttribute("stroke-dasharray", pct>=100 ? "100 0" : (pct.toFixed(2)+" 100"));
+
+    var sync=$("sync"); sync.classList.remove("warn");
+    if(S.status==="loading") sync.textContent="Loading RSVPs…";
+    else if(S.status==="slow"){ sync.textContent="Can't reach the RSVP list yet. It will update when the connection is back."; sync.classList.add("warn"); }
+    else if(S.status==="noconfig"){ sync.textContent="RSVPs aren't connected yet. The organiser needs to set API_URL in config.js."; sync.classList.add("warn"); }
+    else sync.textContent="Live · updated just now";
+  }
+
+  /* ---------- render: tally + list ---------- */
+  var armed={};
+  function renderList(){
+    var counts={}, lapsBy={};
+    DATES.forEach(function(d){counts[d.id]=0; lapsBy[d.id]=0;});
+    S.rsvps.forEach(function(r){counts[r.date]++; lapsBy[r.date]+=r.laps;});
+    var maxC=0, topId=null;
+    DATES.forEach(function(d){ if(d.id!=="any" && counts[d.id]>maxC){maxC=counts[d.id]; topId=d.id;} });
+    var tally=$("tally"); tally.textContent="";
+    DATES.forEach(function(d){
+      var c=el("div","tally-cell"+(d.id===topId&&maxC>0?" top":""));
+      if(d.id===topId&&maxC>0) c.appendChild(el("span","pill","Most picked"));
+      c.appendChild(el("span","tally-day",d.id==="any"?"Any date":d.label));
+      c.appendChild(el("span","tally-meta num",counts[d.id]+(counts[d.id]===1?" runner":" runners")+" · "+lapsBy[d.id]+" laps"));
+      var b=el("div","tally-bar"); var i=el("i"); var denom=Math.max(1,S.rsvps.length);
+      i.style.width=(counts[d.id]/denom*100)+"%"; b.appendChild(i); c.appendChild(b);
+      tally.appendChild(c);
+    });
+
+    var pledged=S.rsvps.reduce(function(a,r){return a+r.laps;},0);
+    var n=S.rsvps.length;
+    $("runnersSub").textContent = n ? (n+(n===1?" runner":" runners")+" · "+pledged+" laps · "+km(pledged)+" km pledged") : (S.status==="loading" ? "Loading the start list…" : "No runners yet.");
+
+    var list=$("list"), rows=$("rows");
+    list.classList.toggle("no-actions", ownInList().length===0);
+    rows.textContent="";
+    if(!n){
+      var e=el("div","empty");
+      var loading = S.status==="loading";
+      e.appendChild(el("strong",null, loading ? "Loading…" : "The start list is empty"));
+      e.appendChild(el("span",null, loading ? "Fetching who's signed up." : "Be the first to take a leg."));
+      rows.appendChild(e);
+      return;
+    }
+    S.rsvps.forEach(function(r,idx){
+      var row=el("div","row");
+      var bib=String(idx+1); if(bib.length<2) bib="0"+bib;
+      row.appendChild(el("span","bib num",bib));
+      var own=isMine(r.id);
+      var nm=el("span","r-name"); nm.appendChild(el("span",null,r.name));
+      if(own) nm.appendChild(el("span","you","You"));
+      row.appendChild(nm);
+      row.appendChild(el("span","r-date",dateLabel(r.date)));
+      var lp=el("span","r-laps num",r.laps+(r.laps===1?" lap":" laps"));
+      lp.appendChild(el("small",null,"≈ "+km(r.laps)+" km"));
+      row.appendChild(lp);
+      var act=el("span","r-actions");
+      if(own){
+        var ed=el("button","btn btn-ghost","Edit"); ed.type="button";
+        ed.setAttribute("aria-label","Edit RSVP for "+r.name);
+        ed.disabled=S.saving;
+        ed.addEventListener("click",function(){ startEdit(r.id); });
+        act.appendChild(ed);
+        var rm=el("button","btn btn-danger"+(armed[r.id]?" armed":""), armed[r.id]?"Confirm":"Remove"); rm.type="button";
+        rm.setAttribute("aria-label",(armed[r.id]?"Confirm removing ":"Remove ")+r.name);
+        rm.disabled=S.saving;
+        rm.addEventListener("click",function(){ removeEntry(r.id); });
+        act.appendChild(rm);
+      }
+      row.appendChild(act);
+      rows.appendChild(row);
+    });
+  }
+
+  /* ---------- render: form ---------- */
+  // Returns the own entry id the form edits, or null for create mode.
+  function targetId(){
+    if(S.target==="new") return null;
+    if(S.target!=="auto" && isMine(S.target) && findRsvp(S.target)) return S.target;
+    var own=ownInList();
+    return own.length ? own[0].id : null;
+  }
+
+  function renderForm(){
+    var tid=targetId();
+    var existing=tid ? findRsvp(tid) : null;
+    var own=ownInList();
+    var isPrimary = !!existing && own.length>0 && own[0].id===tid;
+    var forOther = S.target==="new" && own.length>0;
+
+    var key = tid || "new";
+    if(S.formFor!==key && (!S.dirty || S.forceFill)){
+      if(existing){ $("rsvp-name").value=existing.name; setDate(existing.date); lapsIn.value=existing.laps||1; }
+      else { $("rsvp-name").value=""; setDate(null); lapsIn.value=4; }
+      S.formFor=key; S.dirty=false; updateKm();
+      $("err-name").textContent=""; $("err-date").textContent=""; $("err-laps").textContent="";
+    }
+    S.forceFill=false;
+
+    var heading, submit, nameLabel, removeText;
+    if(!existing){
+      heading = forOther ? "Sign up someone else" : "Count me in";
+      submit = forOther ? "Add runner" : "Save my RSVP";
+      nameLabel = forOther ? "Runner's name" : "Your name";
+    }else if(isPrimary){
+      heading="Your RSVP"; submit="Update my RSVP"; nameLabel="Your name"; removeText="Remove me";
+    }else{
+      heading="Edit "+existing.name+"'s RSVP"; submit="Save changes"; nameLabel="Runner's name"; removeText="Remove runner";
+    }
+    $("formHeading").textContent=heading;
+    $("submitBtn").textContent = S.saving ? "Saving…" : submit;
+    $("nameLabel").textContent=nameLabel;
+    $("otherBtn").hidden = !existing;
+    $("cancelBtn").hidden = !(own.length>0 && (!existing || !isPrimary));
+    $("cancelBtn").textContent = existing ? "Back to my RSVP" : "Cancel";
+    var rb=$("removeBtn");
+    rb.hidden = !existing;
+    if(existing){
+      rb.textContent = armed[tid] ? "Confirm remove" : removeText;
+      rb.classList.toggle("armed", !!armed[tid]);
+    }
+
+    var off = S.saving || S.status==="noconfig";
+    var ctrls=$("form").querySelectorAll("input,button");
+    for(var j=0;j<ctrls.length;j++){
+      if(ctrls[j].id==="rsvp-website") continue;
+      ctrls[j].disabled = off;
+    }
+  }
+
+  function render(){ renderProgress(); renderList(); renderForm(); }
+
+  /* ---------- API ---------- */
+  var writeSeq=0;           // bumps on every write so older reads can't overwrite newer state
+  var reading=false, readAgain=false, lastRead=0;
+
+  function refresh(){
+    if(!API_URL){ S.status="noconfig"; render(); return; }
+    if(reading){ readAgain=true; return; }
+    reading=true; readAgain=false;
+    var seq=writeSeq;
+    var ctrl = typeof AbortController==="function" ? new AbortController() : null;
+    var slowT=setTimeout(function(){ S.status="slow"; render(); }, SLOW_MS);
+    var abortT=setTimeout(function(){ if(ctrl) ctrl.abort(); }, ABORT_MS);
+    fetch(API_URL, {cache:"no-store", signal: ctrl ? ctrl.signal : undefined})
+      .then(function(res){ return res.json(); })
+      .then(function(d){
+        if(!d || d.ok!==true || !Array.isArray(d.rsvps)) throw new Error("bad response");
+        lastRead=Date.now();
+        S.status="live";
+        if(seq===writeSeq && !S.saving){
+          S.rsvps=sortList(d.rsvps.map(clean));
+          Object.keys(armed).forEach(function(id){ if(!findRsvp(id)) delete armed[id]; });
+        }else readAgain=true;
+      })
+      .catch(function(){ S.status="slow"; })
+      .then(function(){
+        clearTimeout(slowT); clearTimeout(abortT);
+        reading=false; render();
+        if(readAgain) refresh();
+      });
+  }
+
+  function post(payload){
+    return fetch(API_URL, {
+      method:"POST",
+      body: JSON.stringify(payload),
+      headers: {"Content-Type":"text/plain;charset=utf-8"}
+    }).then(function(res){ return res.json(); });
+  }
+
+  var FALLBACK = {
+    duplicate_name: "That name is already on the list. Add a surname initial, or edit your existing RSVP.",
+    invalid_name: "Add a name so others know who's running.",
+    invalid_date: "Pick one of the listed dates.",
+    invalid_laps: "Enter between 1 and "+TOTAL+" laps.",
+    forbidden: "This RSVP can only be changed from the device that created it.",
+    not_found: "That RSVP is no longer on the list.",
+    full: "The RSVP list is full. Ask the organiser.",
+    rate_limited: "Too many saves just now. Wait a minute and try again.",
+    busy: "The list is busy. Try again in a few seconds."
+  };
+  var NETWORK_MSG = "Couldn't save just now. Check your connection and try again.";
+  function serverMsg(res){
+    if(res && typeof res.message==="string" && res.message) return res.message;
+    return (res && FALLBACK[res.error]) || NETWORK_MSG;
+  }
+  var FIELD_FOR = { duplicate_name:"rsvp-name", invalid_name:"rsvp-name", invalid_laps:"rsvp-laps" };
+
+  function msg(text, kind){ var m=$("msg"); m.textContent=text||""; m.className="msg"+(kind?" "+kind:""); }
+  function scrollToForm(){ $("rsvp").scrollIntoView({behavior: reduce?"auto":"smooth", block:"start"}); }
+
+  /* ---------- actions ---------- */
+  function startEdit(id){
+    S.target=id; S.forceFill=true; msg("");
+    render(); scrollToForm();
+  }
+  $("otherBtn").addEventListener("click",function(){
+    S.target="new"; S.forceFill=true; msg(""); render();
+    try{ $("rsvp-name").focus(); }catch(_){}
+  });
+  $("cancelBtn").addEventListener("click",function(){ S.target="auto"; S.forceFill=true; msg(""); render(); });
+
+  $("form").addEventListener("submit",function(e){
+    e.preventDefault();
+    if(S.saving || !API_URL) return;
+    var name=$("rsvp-name").value.replace(/\s+/g," ").trim().slice(0,40);
+    var date=getDate();
+    var laps=readLaps();
+    var ok=true, first=null;
+    $("err-name").textContent=""; $("err-date").textContent=""; $("err-laps").textContent="";
+    if(!name){ $("err-name").textContent="Add a name so others know who's running."; ok=false; first=first||$("rsvp-name"); }
+    if(!date){ $("err-date").textContent="Pick the date that suits you best."; ok=false; first=first||dateOpts.querySelector("input"); }
+    if(!(laps>=1 && laps<=TOTAL)){ $("err-laps").textContent="Enter between 1 and "+TOTAL+" laps."; ok=false; first=first||lapsIn; }
+    if(!ok){ msg(""); if(first) try{ first.focus(); }catch(_){} return; }
+
+    var tid=targetId();
+    var existing=tid ? findRsvp(tid) : null;
+    var own=ownInList();
+    var wasOther = !tid && own.length>0;
+    var wasPrimary = !!tid && own.length>0 && own[0].id===tid;
+    var payload = tid
+      ? {action:"update", id:tid, editToken:tokenFor(tid), name:name, date:date, laps:laps}
+      : {action:"create", name:name, date:date, laps:laps, website:$("rsvp-website").value};
+
+    S.saving=true; writeSeq++; msg("Saving…"); render();
+    post(payload).then(function(res){
+      if(res && res.ok===true){
+        if(tid){
+          upsertLocal(res.rsvp || {id:tid, name:name, date:date, laps:laps, createdAt:existing?existing.createdAt:Date.now()});
+          msg(wasPrimary ? "Updated. See you on the track!" : (name+"'s RSVP is updated."), "ok");
+        }else{
+          if(typeof res.id==="string" && typeof res.editToken==="string"){
+            addMine(res.id, res.editToken);
+            if(res.rsvp) upsertLocal(res.rsvp);
+          }
+          msg(wasOther ? (name+" is on the start list.") : "You're in! See you on the track.", "ok");
+          S.target="auto";
+        }
+        S.dirty=false; S.forceFill=true;
+      }else{
+        var code=res && res.error;
+        if(code==="not_found" && tid){ dropMine(tid); removeLocal(tid); S.target="auto"; S.dirty=false; S.forceFill=true; }
+        msg(serverMsg(res),"err");
+        var f=FIELD_FOR[code]; if(f) try{ $(f).focus(); }catch(_){}
+      }
+    }).catch(function(){
+      msg(NETWORK_MSG,"err");
+    }).then(function(){
+      S.saving=false; writeSeq++; render(); refresh();
+    });
+  });
+
+  function removeEntry(id){
+    if(S.saving || !isMine(id)) return;
+    if(!armed[id]){
+      armed[id]=true; render();
+      setTimeout(function(){ if(armed[id]){ delete armed[id]; render(); } }, 4000);
+      return;
+    }
+    delete armed[id];
+    var r=findRsvp(id);
+    var own=ownInList();
+    var wasPrimary = own.length>0 && own[0].id===id;
+    S.saving=true; writeSeq++; msg("Removing…"); render();
+    post({action:"delete", id:id, editToken:tokenFor(id)}).then(function(res){
+      if(res && (res.ok===true || res.error==="not_found")){
+        dropMine(id); removeLocal(id);
+        if(S.target===id) S.target="auto";
+        S.dirty=false; S.forceFill=true;
+        msg(wasPrimary ? "You've been removed from the start list." : ((r?r.name:"Runner")+" has been removed."), "ok");
+      }else{
+        msg(serverMsg(res),"err");
+      }
+    }).catch(function(){
+      msg(NETWORK_MSG,"err");
+    }).then(function(){
+      S.saving=false; writeSeq++; render(); refresh();
+    });
+  }
+  $("removeBtn").addEventListener("click",function(){ var tid=targetId(); if(tid) removeEntry(tid); });
+
+  /* ---------- start ---------- */
+  render();
+  refresh();
+  setInterval(function(){ if(document.visibilityState==="visible") refresh(); }, POLL_MS);
+  document.addEventListener("visibilitychange",function(){
+    if(document.visibilityState==="visible" && Date.now()-lastRead>POLL_MS) refresh();
+  });
+})();
+</script>
+</body>
+</html>
