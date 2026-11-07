@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>December Relay Marathon</title>
-<meta name="description" content="Relay marathon on the Village Green track, UNSW Kensington. 94 laps, one leg at a time. RSVP with your preferred date and laps.">
+<meta name="description" content="Relay marathon on the Village Green track, UNSW Kensington. 94 laps, one leg at a time. One day, everyone together: vote for the day and pledge your laps.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='7' width='26' height='18' rx='9' fill='none' stroke='%231c5bd0' stroke-width='4'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -93,6 +93,9 @@ h1 em{font-style:normal;color:var(--accent)}
 .lede{max-width:46ch;margin:14px 0 0;color:var(--muted);font-size:1.05rem}
 .dates{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;align-items:center}
 .date-chip{font-family:var(--font-display);font-weight:700;font-size:1.05rem;letter-spacing:.02em;text-transform:uppercase;padding:6px 12px;border:1.5px solid var(--ink);border-radius:8px;line-height:1.1}
+.vote-line{margin:18px 0 0;font-size:1rem;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.vote-line strong{font-weight:700}
+.dates .date-chip.option{border-style:dashed}
 .tbc{font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--tbc);border:1.5px dashed var(--tbc);padding:4px 9px;border-radius:999px}
 .confirmed{font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--good);border:1.5px solid var(--good);padding:4px 9px;border-radius:999px}
 
@@ -135,6 +138,10 @@ section.block{padding:56px 0;border-top:1px solid var(--line)}
 h2{font-size:clamp(2rem,5vw,2.8rem);font-weight:800;text-transform:uppercase}
 .sec-sub{color:var(--muted);margin:6px 0 0}
 
+.vote-head{margin-bottom:12px}
+.vote-head h3{font-size:1.5rem;font-weight:800;text-transform:uppercase}
+.vote-head p{margin:4px 0 0;color:var(--muted);font-size:.95rem}
+.tally-cell.flex{border-style:dashed}
 .tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:22px}
 .tally-cell{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;position:relative}
 .tally-cell.top{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
@@ -252,12 +259,12 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
         <p class="eyebrow">Village Green track <span class="dot" aria-hidden="true"></span> UNSW Kensington</p>
         <h1 id="title">December Relay <em>Marathon</em></h1>
         <p class="lede">Run as many laps as you like. Together we cover the full 42.2&nbsp;km: 94 laps of the Village Green loop, one leg at a time.</p>
-        <div class="dates" id="heroDates" aria-label="Possible dates">
-          <span class="date-chip">Sat 5</span>
-          <span class="date-chip">Sun 6</span>
-          <span class="date-chip">Sat 12</span>
-          <span class="date-chip">Sun 13 Dec</span>
-          <span class="tbc">Date TBC</span>
+        <p class="vote-line" id="voteLine"><span><strong>One day, everyone together.</strong> Vote for which:</span><span class="tbc">Vote open</span></p>
+        <div class="dates" id="heroDates" aria-label="Day options">
+          <span class="date-chip option">Sat 5 Dec</span>
+          <span class="date-chip option">Sun 6 Dec</span>
+          <span class="date-chip option">Sat 12 Dec</span>
+          <span class="date-chip option">Sun 13 Dec</span>
         </div>
       </div>
 
@@ -373,7 +380,7 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
           Count me in!
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M5 12l7 7 7-7"/></svg>
         </a>
-        <p class="cta-note" id="ctaNote">Pick the date that suits you and roughly how many laps you'll run.</p>
+        <p class="cta-note" id="ctaNote">Tell us which day works best and roughly how many laps you'll run. The day with the most votes is the one we all run.</p>
       </div>
     </div>
   </section>
@@ -387,10 +394,16 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
           <p class="sec-sub num" id="runnersSub">Loading the start list…</p>
         </div>
       </div>
-      <div class="tally" id="tally" aria-label="Votes per date"></div>
+      <div id="voteBlock">
+        <div class="vote-head">
+          <h3>Day vote</h3>
+          <p>The day with the most votes is the day we all run.</p>
+        </div>
+        <div class="tally" id="tally" aria-label="Day vote"></div>
+      </div>
       <div class="list no-actions" id="list">
         <div class="list-head" aria-hidden="true">
-          <span>Bib</span><span>Runner</span><span>Preferred date</span><span>Est. laps</span><span class="h-actions"></span>
+          <span>Bib</span><span>Runner</span><span>Day vote</span><span>Est. laps</span><span class="h-actions"></span>
         </div>
         <div id="rows"></div>
       </div>
@@ -420,7 +433,7 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
         </div>
 
         <fieldset class="field" id="dateField">
-          <legend>Preferred date <span class="hint">· final date to be confirmed</span></legend>
+          <legend>Which day works best for you? <span class="hint">· we'll all run on the day with the most votes</span></legend>
           <div class="date-opts" id="dateOpts"></div>
           <span class="field-err" id="err-date"></span>
         </fieldset>
@@ -454,7 +467,7 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
 </main>
 
 <footer>
-  <div class="wrap" id="footerText">December Relay Marathon · Village Green, UNSW Kensington · Date to be confirmed from the RSVPs.</div>
+  <div class="wrap" id="footerText">December Relay Marathon · Village Green, UNSW Kensington · Day set by the RSVP vote.</div>
 </footer>
 
 <script>
@@ -474,7 +487,7 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
     {id:"2026-12-06", big:"Sun 6", small:"December", label:"Sun 6 Dec", long:"Sunday 6 December"},
     {id:"2026-12-12", big:"Sat 12", small:"December", label:"Sat 12 Dec", long:"Saturday 12 December"},
     {id:"2026-12-13", big:"Sun 13", small:"December", label:"Sun 13 Dec", long:"Sunday 13 December"},
-    {id:"any", big:"Any", small:"Any of these works", label:"Any date", long:"Any date"}
+    {id:"any", big:"Any", small:"Any day works", label:"Any day", long:"Any day"}
   ];
   var CONFIRMED = null;
   DATES.forEach(function(d){ if(d.id !== "any" && d.id === CFG.CONFIRMED_DATE) CONFIRMED = d; });
@@ -487,7 +500,7 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
   function $(id){ return document.getElementById(id); }
   function el(tag, cls, text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
   function km(laps){ return (laps*LAP_KM).toFixed(1); }
-  function dateLabel(id){ for(var i=0;i<DATES.length;i++) if(DATES[i].id===id) return DATES[i].label; return "Any date"; }
+  function dateLabel(id){ for(var i=0;i<DATES.length;i++) if(DATES[i].id===id) return DATES[i].label; return "Any day"; }
   function findRsvp(id){ for(var i=0;i<S.rsvps.length;i++) if(S.rsvps[i].id===id) return S.rsvps[i]; return null; }
 
   /* ---------- own entries (this device) ---------- */
@@ -519,6 +532,8 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
     hd.appendChild(el("span","date-chip",CONFIRMED.label));
     hd.appendChild(el("span","confirmed","Date confirmed"));
     $("dateField").hidden=true;
+    $("voteLine").hidden=true;
+    $("voteBlock").hidden=true;
     $("ctaNote").textContent="Tell us roughly how many laps you'll run on "+CONFIRMED.long+".";
     $("footerText").textContent="December Relay Marathon · Village Green, UNSW Kensington · "+CONFIRMED.long+".";
   }
@@ -611,19 +626,23 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
   /* ---------- render: tally + list ---------- */
   var armed={};
   function renderList(){
-    var counts={}, lapsBy={};
-    DATES.forEach(function(d){counts[d.id]=0; lapsBy[d.id]=0;});
-    S.rsvps.forEach(function(r){counts[r.date]++; lapsBy[r.date]+=r.laps;});
-    var maxC=0, topId=null;
-    DATES.forEach(function(d){ if(d.id!=="any" && counts[d.id]>maxC){maxC=counts[d.id]; topId=d.id;} });
+    var counts={};
+    DATES.forEach(function(d){counts[d.id]=0;});
+    S.rsvps.forEach(function(r){counts[r.date]++;});
+    var maxC=0;
+    DATES.forEach(function(d){ if(d.id!=="any" && counts[d.id]>maxC) maxC=counts[d.id]; });
+    var tops=DATES.filter(function(d){ return d.id!=="any" && maxC>0 && counts[d.id]===maxC; }).map(function(d){ return d.id; });
+    var tied=tops.length>1;
     var tally=$("tally"); tally.textContent="";
     DATES.forEach(function(d){
-      var c=el("div","tally-cell"+(d.id===topId&&maxC>0?" top":""));
-      if(d.id===topId&&maxC>0) c.appendChild(el("span","pill","Most picked"));
-      c.appendChild(el("span","tally-day",d.id==="any"?"Any date":d.label));
-      c.appendChild(el("span","tally-meta num",counts[d.id]+(counts[d.id]===1?" runner":" runners")+" · "+lapsBy[d.id]+" laps"));
+      var isAny=d.id==="any", isTop=tops.indexOf(d.id)!==-1;
+      var c=el("div","tally-cell"+(isTop?" top":"")+(isAny?" flex":""));
+      if(isTop) c.appendChild(el("span","pill",tied?"Tied":"Leading"));
+      c.appendChild(el("span","tally-day",d.label));
+      var k=counts[d.id];
+      c.appendChild(el("span","tally-meta num", isAny ? (k+" flexible") : (k+(k===1?" vote":" votes"))));
       var b=el("div","tally-bar"); var i=el("i"); var denom=Math.max(1,S.rsvps.length);
-      i.style.width=(counts[d.id]/denom*100)+"%"; b.appendChild(i); c.appendChild(b);
+      i.style.width=(k/denom*100)+"%"; b.appendChild(i); c.appendChild(b);
       tally.appendChild(c);
     });
 
@@ -650,7 +669,7 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
       var nm=el("span","r-name"); nm.appendChild(el("span",null,r.name));
       if(own) nm.appendChild(el("span","you","You"));
       row.appendChild(nm);
-      row.appendChild(el("span","r-date",dateLabel(r.date)));
+      row.appendChild(el("span","r-date", r.date==="any" ? "Any day" : ("Prefers "+dateLabel(r.date))));
       var lp=el("span","r-laps num",r.laps+(r.laps===1?" lap":" laps"));
       lp.appendChild(el("small",null,"≈ "+km(r.laps)+" km"));
       row.appendChild(lp);
@@ -772,7 +791,7 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
   var FALLBACK = {
     duplicate_name: "That name is already on the list. Add a surname initial, or edit your existing RSVP.",
     invalid_name: "Add a name so others know who's running.",
-    invalid_date: "Pick one of the listed dates.",
+    invalid_date: "Pick one of the listed days.",
     invalid_laps: "Enter between 1 and "+TOTAL+" laps.",
     forbidden: "This RSVP can only be changed from the device that created it.",
     not_found: "That RSVP is no longer on the list.",
@@ -810,7 +829,7 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
     var ok=true, first=null;
     $("err-name").textContent=""; $("err-date").textContent=""; $("err-laps").textContent="";
     if(!name){ $("err-name").textContent="Add a name so others know who's running."; ok=false; first=first||$("rsvp-name"); }
-    if(!date){ $("err-date").textContent="Pick the date that suits you best."; ok=false; first=first||dateOpts.querySelector("input"); }
+    if(!date){ $("err-date").textContent="Pick the day that works best for you."; ok=false; first=first||dateOpts.querySelector("input"); }
     if(!(laps>=1 && laps<=TOTAL)){ $("err-laps").textContent="Enter between 1 and "+TOTAL+" laps."; ok=false; first=first||lapsIn; }
     if(!ok){ msg(""); if(first) try{ first.focus(); }catch(_){} return; }
 
