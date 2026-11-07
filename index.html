@@ -429,10 +429,11 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
           <label for="rsvp-laps">Estimated laps <span class="hint">· a guess is fine</span></label>
           <div class="stepper">
             <button type="button" class="btn" id="lapsMinus" aria-label="One lap fewer">−</button>
-            <input type="number" id="rsvp-laps" name="laps" min="1" max="94" step="1" inputmode="numeric" value="4" aria-describedby="lapsKm err-laps">
+            <input type="number" id="rsvp-laps" name="laps" min="1" max="94" step="1" inputmode="numeric" value="4" aria-describedby="lapsKm laps-hint err-laps">
             <button type="button" class="btn" id="lapsPlus" aria-label="One lap more">+</button>
           </div>
           <span class="laps-km num" id="lapsKm">≈ 1.8 km</span>
+          <span class="hint" id="laps-hint">This is your total for the day, not one run. Split it into short legs and rest as long as you need in between.</span>
           <span class="field-err" id="err-laps"></span>
         </div>
 
