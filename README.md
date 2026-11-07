@@ -27,11 +27,15 @@ The dates are in `index.html` (`DATES` in the script) and in `apps-script/Code.g
 
 ## Moderate
 
-Moderation happens in the Google Sheet, not on the page.
+Moderation happens in the Google Sheet (tab `RSVPs`), not on the page. The page has no admin controls, because everyone with the link sees the same page.
 
-- Hide a row: set its `hidden` column to `TRUE`. It drops off the page within 30 seconds (the next poll).
-- Fix a name or laps: edit the cell in the Sheet.
+- **Remove an RSVP (reversible):** set its `hidden` cell to `TRUE`. It drops off the page within 30 seconds (the next poll). Set it back to `FALSE` to restore it. A hidden name can be used again by someone else.
+- **Remove an RSVP for good:** right-click the row number > Delete row.
+- **Fix a name, date or laps:** edit the cell. Dates must be one of the ids in `DATES` (for example `2026-12-12`) or `any`.
+- **Add a runner by hand:** type a new row with `name`, `date` and `laps`. Leave `id` and `tokenHash` empty. Nobody can edit that row from the page; change it in the Sheet.
 - Runners can edit or remove only the entries they created, from the same browser. The page keeps their edit tokens in `localStorage` (`relay2026.mine`). If they clear browser data or switch device, they need to ask the organiser.
+
+Limits in `Code.gs`: 300 rows in total (hidden rows count), and 60 writes per 10 minutes across everyone.
 
 ## Redeploy the script
 
