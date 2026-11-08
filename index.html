@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>December Relay Marathon</title>
-<meta name="description" content="Relay marathon on the Village Green track, UNSW Kensington. 94 laps, one leg at a time. One day, everyone together: vote for the day and pledge your laps.">
+<meta name="description" content="Relay marathon on the Village Green track, UNSW Kensington. 94 laps, one leg at a time. Add the mornings and evenings you're free and we'll pick the day.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='7' width='26' height='18' rx='9' fill='none' stroke='%231c5bd0' stroke-width='4'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* Layout idea: race-bib sports poster. Hero pairs the event block with the
-   real Village Green loop; then the start list; then the entry form. */
+   real Village Green loop; then who's free when; then the availability form. */
 :root{
   --bg:#f2f4f0;
   --surface:#ffffff;
@@ -93,9 +93,6 @@ h1 em{font-style:normal;color:var(--accent)}
 .lede{max-width:46ch;margin:14px 0 0;color:var(--muted);font-size:1.05rem}
 .dates{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;align-items:center}
 .date-chip{font-family:var(--font-display);font-weight:700;font-size:1.05rem;letter-spacing:.02em;text-transform:uppercase;padding:6px 12px;border:1.5px solid var(--ink);border-radius:8px;line-height:1.1}
-.vote-line{margin:18px 0 0;font-size:1rem;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
-.vote-line strong{font-weight:700}
-.dates .date-chip.option{border-style:dashed}
 .tbc{font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--tbc);border:1.5px dashed var(--tbc);padding:4px 9px;border-radius:999px}
 .confirmed{font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--good);border:1.5px solid var(--good);padding:4px 9px;border-radius:999px}
 
@@ -103,7 +100,6 @@ h1 em{font-style:normal;color:var(--accent)}
 .map-card svg{display:block;width:100%;height:auto;max-height:44vh;margin:0 auto}
 @media (min-width:880px){.map-card svg{max-height:620px}}
 .map-caption{display:flex;justify-content:space-between;gap:4px 10px;flex-wrap:wrap;font-size:.85rem;color:var(--muted);padding:6px 8px 2px;font-weight:500}
-.map-note{flex-basis:100%;color:var(--ink)}
 
 .progress-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px 22px}
 .remain{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
@@ -132,76 +128,83 @@ h1 em{font-style:normal;color:var(--accent)}
 .cta-big svg{width:26px;height:26px}
 .cta-note{color:var(--muted);font-size:.9rem;margin:10px 0 0}
 
+.times{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-weight:600;font-size:.98rem}
+.times span{display:inline-flex;gap:8px;align-items:center}
+.tag{font-family:var(--font-display);font-weight:800;font-size:.95rem;letter-spacing:.04em;padding:1px 7px;border-radius:6px;border:1.5px solid var(--ink);line-height:1.2}
+
 /* sections */
 section.block{padding:56px 0;border-top:1px solid var(--line)}
 .sec-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
 h2{font-size:clamp(2rem,5vw,2.8rem);font-weight:800;text-transform:uppercase}
 .sec-sub{color:var(--muted);margin:6px 0 0}
 
-.vote-head{margin-bottom:12px}
-.vote-head h3{font-size:1.5rem;font-weight:800;text-transform:uppercase}
-.vote-head p{margin:4px 0 0;color:var(--muted);font-size:.95rem}
-.tally-cell.flex{border-style:dashed}
-.tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:22px}
-.tally-cell{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;position:relative}
-.tally-cell.top{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
-.tally-day{font-family:var(--font-display);font-weight:700;font-size:1.25rem;text-transform:uppercase;line-height:1}
-.tally-meta{font-size:.88rem;color:var(--muted)}
-.tally-bar{height:6px;border-radius:999px;background:var(--line);overflow:hidden;margin-top:4px}
-.tally-bar i{display:block;height:100%;background:var(--accent);border-radius:999px}
-.pill{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:var(--accent);color:var(--accent-ink);align-self:flex-start}
-
-.list{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
-.list-head,.row{display:grid;grid-template-columns:64px minmax(0,1fr) 150px 140px 150px;gap:12px;align-items:center;padding:12px 18px}
-.list-head{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}
-.row+.row{border-top:1px solid var(--line)}
-.bib{font-family:var(--font-display);font-weight:800;font-size:1.15rem;border:2px solid var(--ink);border-radius:6px;padding:2px 0;text-align:center;width:50px;line-height:1.1}
-.r-name{font-weight:600;overflow-wrap:anywhere;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.you{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:1px 7px;border-radius:999px;border:1.5px solid var(--accent);color:var(--accent)}
-.r-date{font-weight:500}
-.r-laps{font-weight:600}
-.r-laps small{display:block;color:var(--muted);font-weight:500;font-size:.82rem}
-.r-actions{display:flex;gap:6px;justify-content:flex-end}
-.r-actions .btn{padding:6px 10px;font-size:.85rem;border-radius:9px}
-.empty{padding:34px 20px;text-align:center;color:var(--muted)}
-.empty strong{display:block;color:var(--ink);font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;margin-bottom:4px}
-.list-head .h-actions{text-align:right}
-.list.no-actions .list-head,.list.no-actions .row{grid-template-columns:64px minmax(0,1fr) 150px 140px}
-.list.no-actions .h-actions,.list.no-actions .r-actions{display:none}
-@media (max-width:700px){
-  .list-head{display:none}
-  .row,.list.no-actions .row{grid-template-columns:58px minmax(0,1fr) auto;grid-template-areas:"bib name laps" "bib date laps" "act act act";row-gap:2px;padding:14px 16px}
-  .row .bib{grid-area:bib}
-  .row .r-name{grid-area:name}
-  .row .r-date{grid-area:date;color:var(--muted);font-size:.92rem}
-  .row .r-laps{grid-area:laps;text-align:right}
-  .row .r-actions{grid-area:act;justify-content:flex-start;margin-top:8px}
-  .row .r-actions:empty{display:none}
-}
+/* who's free: calendar heatmap, same shape as the picker */
+.best-line{margin:0 0 14px;font-size:1rem}
+.best-line strong{font-family:var(--font-display);font-weight:700;font-size:1.2rem;text-transform:uppercase;letter-spacing:.02em;color:var(--accent)}
+.hm,.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.hm{max-width:none}
+.dow{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:center}
+.blank{visibility:hidden}
+.d-num{display:block;font-family:var(--font-display);font-weight:700;font-size:1rem;line-height:1.15;text-align:center;white-space:nowrap}
+.d-num small{font-family:var(--font-body);font-size:.58rem;font-weight:700;letter-spacing:.02em;color:var(--muted);text-transform:uppercase}
+.hm-day{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:3px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.hm-slot{border-radius:6px;font-size:.78rem;font-weight:700;display:flex;justify-content:center;align-items:baseline;gap:3px;padding:3px 0;line-height:1.2;color:var(--ink);min-height:1.6em}
+.hm-slot small{font-size:.6rem;font-weight:600;opacity:.65}
+.hm-slot.hot{color:var(--accent-ink)}
+.hm-slot.lead{box-shadow:inset 0 0 0 2px var(--ink)}
+.hm-slot.off{opacity:.35}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:20px;align-items:center}
+.chips-label{font-weight:700;margin-right:2px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font:inherit;font-size:.92rem;font-weight:600;color:var(--ink)}
+button.chip{cursor:pointer;border-color:var(--accent)}
+button.chip:hover{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+.you,.host{font-size:.64rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:0 6px;border-radius:999px;border:1.5px solid var(--accent);color:var(--accent)}
+.host{background:var(--accent);color:var(--accent-ink)}
 
 /* form */
-.form-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(20px,4vw,32px);max-width:680px;position:relative}
+.form-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(16px,4vw,32px);position:relative}
 .form-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
 .form-top h3{font-size:1.7rem;font-weight:800;text-transform:uppercase}
 .form-top .btn{padding:8px 14px;font-size:.92rem}
-.field{display:flex;flex-direction:column;gap:8px;margin-bottom:22px;border:0;padding:0;min-width:0}
+.field{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;border:0;padding:0;min-width:0}
 .field>label,.field legend{font-weight:700;font-size:.95rem;padding:0}
+.field legend{margin-bottom:8px}
 .hint{color:var(--muted);font-size:.88rem;font-weight:400}
 input[type=text],input[type=number]{font:inherit;font-size:1.05rem;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;width:100%}
 input[type=text]:focus,input[type=number]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
-.date-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px}
-.date-opt{position:relative}
-.date-opt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
-.date-opt span{display:flex;flex-direction:column;align-items:flex-start;gap:0;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg);cursor:pointer;height:100%}
-.date-opt b{font-family:var(--font-display);font-weight:700;font-size:1.3rem;text-transform:uppercase;line-height:1.05}
-.date-opt small{color:var(--muted);font-size:.82rem}
-.date-opt input:checked+span{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface));box-shadow:inset 0 0 0 1px var(--accent)}
-.date-opt input:focus-visible+span{outline:3px solid var(--accent);outline-offset:2px}
-.date-opt input:disabled+span{opacity:.55;cursor:not-allowed}
+input::placeholder{color:var(--muted);opacity:1}
+
+/* availability picker: compact; tap the date for both times */
+.cal{max-width:none}
+.cal-day{border:1.5px solid var(--line);border-radius:10px;padding:3px;display:flex;flex-direction:column;gap:3px;background:var(--bg);min-width:0}
+.cal-day.weekend{border-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
+.d-btn{appearance:none;border:0;background:none;font:inherit;color:var(--ink);cursor:pointer;padding:1px 0;border-radius:6px}
+.d-btn:hover{background:var(--line)}
+.slot{appearance:none;font:inherit;font-weight:700;font-size:.72rem;letter-spacing:.03em;padding:5px 0;border-radius:6px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;width:100%;min-width:0}
+.slot:hover{border-color:var(--ink)}
+.slot[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.slot.off{opacity:.4}
+.slot:disabled,.d-btn:disabled{cursor:not-allowed}
+.cal-foot{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:2px;justify-content:space-between}
+.cal-count{font-weight:700}
+@media (min-width:700px){
+  .hm,.cal{gap:8px}
+  .d-num{font-size:1.15rem}
+  .hm-day,.cal-day{padding:5px;gap:4px}
+  .slot{font-size:.82rem;padding:7px 0}
+  .hm-slot{font-size:.88rem;padding:5px 0}
+}
+@media (min-width:1000px){
+  .slot{padding:9px 0}
+  .hm-slot{padding:7px 0}
+  #f-name{max-width:520px}
+}
+
 .stepper{display:flex;align-items:stretch;gap:8px;max-width:300px}
 .stepper .btn{width:52px;font-size:1.5rem;font-weight:700;background:var(--bg);border:1.5px solid var(--line);color:var(--ink);border-radius:12px}
 .stepper .btn:hover{border-color:var(--ink)}
 .stepper input{text-align:center;font-family:var(--font-display);font-weight:800;font-size:1.6rem;padding:8px}
+.stepper input::placeholder{font-family:var(--font-body);font-weight:500;font-size:1rem}
 .laps-km{color:var(--muted);font-size:.92rem}
 .form-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .form-actions .btn-primary{font-family:var(--font-display);font-weight:800;font-size:1.35rem;text-transform:uppercase;padding:14px 28px;border-radius:14px}
@@ -245,8 +248,8 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
   <div class="wrap">
     <div class="brand">Relay <span>·</span> Dec 2026</div>
     <nav aria-label="Sections">
-      <a href="#runners">Runners</a>
-      <a href="#rsvp">RSVP</a>
+      <a href="#free">Who's free</a>
+      <a href="#join">Count me in</a>
     </nav>
   </div>
 </header>
@@ -258,13 +261,15 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
       <div class="hero-title">
         <p class="eyebrow">Village Green track <span class="dot" aria-hidden="true"></span> UNSW Kensington</p>
         <h1 id="title">December Relay <em>Marathon</em></h1>
-        <p class="lede">Run as many laps as you like. Together we cover the full 42.2&nbsp;km: 94 laps of the Village Green loop, one leg at a time.</p>
-        <p class="vote-line" id="voteLine"><span><strong>One day, everyone together.</strong> Vote for which:</span><span class="tbc">Vote open</span></p>
-        <div class="dates" id="heroDates" aria-label="Day options">
-          <span class="date-chip option">Sat 5 Dec</span>
-          <span class="date-chip option">Sun 6 Dec</span>
-          <span class="date-chip option">Sat 12 Dec</span>
-          <span class="date-chip option">Sun 13 Dec</span>
+        <p class="lede">94 laps of the Village Green loop, shared between us. Add the times you're free and we'll pick the day.</p>
+        <div class="dates" aria-label="Possible dates">
+          <span class="date-chip" id="rangeChip">Sun 29 Nov – Sun 13 Dec</span>
+          <span class="tbc">Date TBC</span>
+        </div>
+        <div class="times">
+          <span><span class="tag">AM</span> Start 8:00</span>
+          <span><span class="tag">PM</span> Start 17:00</span>
+          <span>About 5 hours all up</span>
         </div>
       </div>
 
@@ -354,7 +359,6 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
           <figcaption class="map-caption">
             <span>Village Green loop, run anticlockwise</span>
             <span class="num">1 lap ≈ 449 m · 94 laps = 42.195 km</span>
-            <span class="map-note">Start at the north-west corner. Wait at the waiting area just inside the track (water station there). Toilets in Sam Cracknell Pavilion.</span>
           </figcaption>
         </div>
       </figure>
@@ -371,92 +375,83 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
             <div class="bar-ticks" aria-hidden="true"></div>
           </div>
           <div class="bar-scale num" aria-hidden="true"><span>0</span><span>47 · half</span><span>94 laps</span></div>
-          <p class="sync" id="sync" aria-live="polite">Loading RSVPs…</p>
+          <p class="sync" id="sync" aria-live="polite">Loading…</p>
         </div>
       </div>
 
       <div class="hero-cta">
-        <a class="btn btn-primary cta-big" href="#rsvp" id="ctaBtn">
-          Count me in!
+        <a class="btn btn-primary cta-big" href="#join" id="ctaBtn">
+          Count me in
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M5 12l7 7 7-7"/></svg>
         </a>
-        <p class="cta-note" id="ctaNote">Tell us which day works best and roughly how many laps you'll run. The day with the most votes is the one we all run.</p>
       </div>
     </div>
   </section>
 
-  <!-- 2. Runners -->
-  <section class="block" id="runners" aria-labelledby="runnersTitle">
+  <!-- 2. Who's free when -->
+  <section class="block" id="free" aria-labelledby="freeTitle">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <h2 id="runnersTitle">Who's running</h2>
-          <p class="sec-sub num" id="runnersSub">Loading the start list…</p>
+          <h2 id="freeTitle">Who's free when</h2>
+          <p class="sec-sub num" id="freeSub">Loading…</p>
         </div>
       </div>
-      <div id="voteBlock">
-        <div class="vote-head">
-          <h3>Day vote</h3>
-          <p>The day with the most votes is the day we all run.</p>
-        </div>
-        <div class="tally" id="tally" aria-label="Day vote"></div>
-      </div>
-      <div class="list no-actions" id="list">
-        <div class="list-head" aria-hidden="true">
-          <span>Bib</span><span>Runner</span><span>Day vote</span><span>Est. laps</span><span class="h-actions"></span>
-        </div>
-        <div id="rows"></div>
-      </div>
+      <p class="best-line" id="bestLine" hidden></p>
+      <div class="hm" id="hm" aria-label="How many people are free each morning and evening"></div>
+      <div class="chips" id="chips" hidden></div>
     </div>
   </section>
 
-  <!-- 3. RSVP -->
-  <section class="block" id="rsvp" aria-labelledby="rsvpTitle">
+  <!-- 3. Count me in -->
+  <section class="block" id="join" aria-labelledby="joinTitle">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <h2 id="rsvpTitle">RSVP</h2>
-          <p class="sec-sub">One entry per person. You can change it any time before the day.</p>
+          <h2 id="joinTitle">Count me in</h2>
         </div>
       </div>
       <form class="form-card" id="form" novalidate>
-        <div class="form-top">
-          <h3 id="formHeading">Count me in</h3>
-          <button type="button" class="btn btn-ghost" id="otherBtn" hidden>Sign up someone else</button>
+        <div class="form-top" id="formTop" hidden>
+          <h3 id="formHeading"></h3>
+          <button type="button" class="btn btn-ghost" id="otherBtn" hidden>Add someone else</button>
         </div>
 
         <div class="field">
-          <label for="rsvp-name" id="nameLabel">Your name</label>
-          <input type="text" id="rsvp-name" name="name" maxlength="40" autocomplete="name" placeholder="e.g. Sam L." aria-describedby="name-hint err-name">
-          <span class="hint" id="name-hint">The list is public, so a first name or nickname is fine.</span>
+          <label for="f-name" id="nameLabel">Your name</label>
+          <input type="text" id="f-name" name="name" maxlength="40" autocomplete="name" placeholder="e.g. Sam L." aria-describedby="err-name">
           <span class="field-err" id="err-name"></span>
         </div>
 
-        <fieldset class="field" id="dateField">
-          <legend>Which day works best for you? <span class="hint">· we'll all run on the day with the most votes</span></legend>
-          <div class="date-opts" id="dateOpts"></div>
-          <span class="field-err" id="err-date"></span>
+        <fieldset class="field">
+          <legend>When are you free?</legend>
+          <div class="cal" id="cal"></div>
+          <div class="cal-foot">
+            <span class="cal-count num" id="calCount" aria-live="polite">No times picked yet</span>
+            <span class="hint" id="calLegend"></span>
+          </div>
+          <span class="field-err" id="err-slots"></span>
         </fieldset>
 
         <div class="field">
-          <label for="rsvp-laps">Estimated laps <span class="hint">· a guess is fine</span></label>
+          <label for="f-laps">Estimated laps <span class="hint">· optional</span></label>
           <div class="stepper">
             <button type="button" class="btn" id="lapsMinus" aria-label="One lap fewer">−</button>
-            <input type="number" id="rsvp-laps" name="laps" min="1" max="94" step="1" inputmode="numeric" value="4" aria-describedby="lapsKm laps-hint err-laps">
+            <input type="number" id="f-laps" name="laps" min="1" max="94" step="1" inputmode="numeric" placeholder="Not sure" aria-describedby="lapsKm laps-hint err-laps">
             <button type="button" class="btn" id="lapsPlus" aria-label="One lap more">+</button>
           </div>
-          <span class="laps-km num" id="lapsKm">≈ 1.8 km</span>
-          <span class="hint" id="laps-hint">This is your total for the day, not one run. Split it into short legs and rest as long as you need in between.</span>
+          <span class="laps-km num" id="lapsKm" hidden></span>
+          <span class="hint" id="laps-hint">Your total for the day, with breaks in between.</span>
           <span class="field-err" id="err-laps"></span>
         </div>
 
         <div class="hp" aria-hidden="true">
-          <label for="rsvp-website">Website</label>
-          <input type="text" id="rsvp-website" name="website" tabindex="-1" autocomplete="off">
+          <label for="f-website">Website</label>
+          <input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off">
         </div>
 
         <div class="form-actions">
-          <button type="submit" class="btn btn-primary" id="submitBtn">Save my RSVP</button>
+          <button type="submit" class="btn btn-primary" id="submitBtn">I'm down</button>
           <button type="button" class="btn btn-ghost" id="cancelBtn" hidden>Cancel</button>
           <button type="button" class="btn btn-danger" id="removeBtn" hidden>Remove me</button>
         </div>
@@ -467,7 +462,7 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
 </main>
 
 <footer>
-  <div class="wrap" id="footerText">December Relay Marathon · Village Green, UNSW Kensington · Day set by the RSVP vote.</div>
+  <div class="wrap">December Relay Marathon · Village Green, UNSW Kensington</div>
 </footer>
 
 <script>
@@ -480,28 +475,58 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
   var POLL_MS = 30000;      // re-read while the tab is visible
   var SLOW_MS = 10000;      // show "can't reach" if a read takes longer than this
   var ABORT_MS = 30000;     // give up on a read entirely
-  var MINE_KEY = "relay2026.mine";
-  // Keep in sync with DATES in apps-script/Code.gs.
-  var DATES = [
-    {id:"2026-12-05", big:"Sat 5", small:"December", label:"Sat 5 Dec", long:"Saturday 5 December"},
-    {id:"2026-12-06", big:"Sun 6", small:"December", label:"Sun 6 Dec", long:"Sunday 6 December"},
-    {id:"2026-12-12", big:"Sat 12", small:"December", label:"Sat 12 Dec", long:"Saturday 12 December"},
-    {id:"2026-12-13", big:"Sun 13", small:"December", label:"Sun 13 Dec", long:"Sunday 13 December"},
-    {id:"any", big:"Any", small:"Any day works", label:"Any day", long:"Any day"}
+  var MINE_KEY = "relay2026.avail";
+  // Shown until the first read. The server's firstDay/lastDay (apps-script/Code.gs) replace these.
+  var FIRST_DAY = "2026-11-29", LAST_DAY = "2026-12-13";
+  var TIMES = [
+    {id:"am", tag:"AM", word:"morning", aria:"morning from 8:00"},
+    {id:"pm", tag:"PM", word:"evening", aria:"evening from 17:00"}
   ];
-  var CONFIRMED = null;
-  DATES.forEach(function(d){ if(d.id !== "any" && d.id === CFG.CONFIRMED_DATE) CONFIRMED = d; });
+  var DOW = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var DOW_LONG = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  var MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var MON_LONG = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
   var S = {
-    rsvps: [], status: "loading",   // loading | live | slow | noconfig
-    target: "auto",                 // "auto" (first own entry, else new) | "new" | an own entry id
-    formFor: undefined, dirty: false, forceFill: false, saving: false
+    entries: [], status: "loading",  // loading | live | slow | noconfig
+    target: "auto",                  // "auto" (first own entry, else new) | "new" | an own entry id
+    formFor: undefined, dirty: false, forceFill: false, saving: false,
+    sel: {}                          // slot id -> true, for the form
   };
   function $(id){ return document.getElementById(id); }
   function el(tag, cls, text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
   function km(laps){ return (laps*LAP_KM).toFixed(1); }
-  function dateLabel(id){ for(var i=0;i<DATES.length;i++) if(DATES[i].id===id) return DATES[i].label; return "Any day"; }
-  function findRsvp(id){ for(var i=0;i<S.rsvps.length;i++) if(S.rsvps[i].id===id) return S.rsvps[i]; return null; }
+  function plural(n, one, many){ return n+" "+(n===1?one:many); }
+  function findEntry(id){ for(var i=0;i<S.entries.length;i++) if(S.entries[i].id===id) return S.entries[i]; return null; }
+
+  /* ---------- days and slots ---------- */
+  var DAYS=[], SLOT_IDS=[], SLOT_SET={}, DAY_BY_ID={};
+  function parseDay(s){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s||"")); return m ? new Date(Date.UTC(+m[1],+m[2]-1,+m[3])) : null; }
+  function setRange(first, last){
+    var d=parseDay(first), end=parseDay(last);
+    if(!d || !end || end<d) return false;
+    FIRST_DAY=first; LAST_DAY=last;
+    DAYS=[]; SLOT_IDS=[]; SLOT_SET={}; DAY_BY_ID={};
+    while(d<=end && DAYS.length<62){
+      var w=d.getUTCDay(), info={
+        id:d.toISOString().slice(0,10), dow:w, num:d.getUTCDate(), mon:d.getUTCMonth(), weekend:w===0||w===6,
+        label:DOW[w]+" "+d.getUTCDate()+" "+MON[d.getUTCMonth()],
+        long:DOW_LONG[w]+" "+d.getUTCDate()+" "+MON_LONG[d.getUTCMonth()]
+      };
+      DAYS.push(info); DAY_BY_ID[info.id]=info;
+      TIMES.forEach(function(t){ var s=info.id+"-"+t.id; SLOT_IDS.push(s); SLOT_SET[s]=true; });
+      d.setUTCDate(d.getUTCDate()+1);
+    }
+    var a=DAYS[0], b=DAYS[DAYS.length-1];
+    $("rangeChip").textContent = a.label+" – "+b.label;
+    return true;
+  }
+  function slotLabel(s){ var day=DAY_BY_ID[s.slice(0,10)]; var t=s.slice(11)==="pm"?TIMES[1]:TIMES[0]; return (day?day.label:s.slice(0,10))+", "+t.word; }
+  setRange(FIRST_DAY, LAST_DAY);
+
+  /* ---------- host (Ken): set host = TRUE in the Sheet ---------- */
+  function host(){ for(var i=0;i<S.entries.length;i++) if(S.entries[i].host) return S.entries[i]; return null; }
+  function hostOff(h, s){ return !!h && h.slots.indexOf(s)===-1; }
 
   /* ---------- own entries (this device) ---------- */
   function loadMine(){
@@ -517,7 +542,7 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
   function tokenFor(id){ for(var i=0;i<mine.length;i++) if(mine[i].id===id) return mine[i].editToken; return ""; }
   function addMine(id, token){ mine = mine.filter(function(m){ return m.id!==id; }); mine.push({id:id, editToken:token}); saveMine(); }
   function dropMine(id){ mine = mine.filter(function(m){ return m.id!==id; }); saveMine(); }
-  function ownInList(){ return S.rsvps.filter(function(r){ return isMine(r.id); }); }
+  function ownInList(){ return S.entries.filter(function(r){ return isMine(r.id); }); }
 
   /* ---------- runner animation ---------- */
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -526,90 +551,134 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
     try{ runner.removeAttribute("transform"); motion.beginElement(); }catch(e){ runner.setAttribute("transform","translate(54 45)"); }
   }
 
-  /* ---------- confirmed date ---------- */
-  if(CONFIRMED){
-    var hd=$("heroDates"); hd.textContent=""; hd.setAttribute("aria-label","Event date");
-    hd.appendChild(el("span","date-chip",CONFIRMED.label));
-    hd.appendChild(el("span","confirmed","Date confirmed"));
-    $("dateField").hidden=true;
-    $("voteLine").hidden=true;
-    $("voteBlock").hidden=true;
-    $("ctaNote").textContent="Tell us roughly how many laps you'll run on "+CONFIRMED.long+".";
-    $("footerText").textContent="December Relay Marathon · Village Green, UNSW Kensington · "+CONFIRMED.long+".";
+  /* ---------- calendar layout shared by the heatmap and the picker ---------- */
+  function calShell(box, cellFn){
+    box.textContent="";
+    ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].forEach(function(n){ box.appendChild(el("span","dow",n)); });
+    var lead=DAYS.length ? (DAYS[0].dow+6)%7 : 0;
+    for(var i=0;i<lead;i++) box.appendChild(el("div","blank"));
+    DAYS.forEach(function(d,idx){ box.appendChild(cellFn(d,idx)); });
+  }
+  function dayNum(d, idx){
+    var x=el("span","d-num",String(d.num));
+    if(idx===0||d.num===1) x.appendChild(el("small",null," "+MON[d.mon]));
+    return x;
   }
 
-  /* ---------- date options ---------- */
-  var dateOpts=$("dateOpts");
-  DATES.forEach(function(d){
-    var lab=el("label","date-opt");
-    var inp=document.createElement("input");
-    inp.type="radio"; inp.name="date"; inp.value=d.id; inp.id="date-"+d.id;
-    var sp=el("span");
-    sp.appendChild(el("b",null,d.big));
-    sp.appendChild(el("small",null,d.small));
-    lab.appendChild(inp); lab.appendChild(sp);
-    dateOpts.appendChild(lab);
-    inp.addEventListener("change",function(){ S.dirty=true; $("err-date").textContent=""; });
-  });
-  function setDate(v){ var inputs=dateOpts.querySelectorAll("input"); for(var i=0;i<inputs.length;i++) inputs[i].checked = inputs[i].value===v; }
-  function getDate(){ if(CONFIRMED) return CONFIRMED.id; var c=dateOpts.querySelector("input:checked"); return c?c.value:null; }
+  /* ---------- picker ---------- */
+  var calKey=null;
+  function changed(){ S.dirty=true; $("err-slots").textContent=""; updateCal(); }
+  function buildCal(){
+    calShell($("cal"), function(d,idx){
+      var c=el("div","cal-day"+(d.weekend?" weekend":""));
+      var db=el("button","d-btn"); db.type="button";
+      db.appendChild(dayNum(d,idx));
+      db.setAttribute("aria-label", d.long+", morning and evening");
+      db.addEventListener("click",function(){
+        var a=d.id+"-am", p=d.id+"-pm";
+        if(S.sel[a] && S.sel[p]){ delete S.sel[a]; delete S.sel[p]; } else { S.sel[a]=true; S.sel[p]=true; }
+        changed();
+      });
+      c.appendChild(db);
+      TIMES.forEach(function(t){
+        var b=el("button","slot",t.tag); b.type="button";
+        b.setAttribute("data-slot", d.id+"-"+t.id);
+        b.setAttribute("aria-pressed","false");
+        b.addEventListener("click",function(){
+          var s=b.getAttribute("data-slot");
+          if(S.sel[s]) delete S.sel[s]; else S.sel[s]=true;
+          changed();
+        });
+        c.appendChild(b);
+      });
+      return c;
+    });
+    calKey=FIRST_DAY+"/"+LAST_DAY;
+  }
+  function selected(){ return SLOT_IDS.filter(function(s){ return S.sel[s]; }); }
+  function updateCal(){
+    var h=host(), tid=targetId(), editingHost=!!(h && tid && h.id===tid);
+    var hh = editingHost ? null : h;
+    var btns=$("cal").querySelectorAll(".slot");
+    for(var i=0;i<btns.length;i++){
+      var b=btns[i], s=b.getAttribute("data-slot"), day=DAY_BY_ID[s.slice(0,10)], t=s.slice(11)==="pm"?TIMES[1]:TIMES[0];
+      var off=hostOff(hh, s);
+      b.setAttribute("aria-pressed", S.sel[s] ? "true" : "false");
+      b.classList.toggle("off", off);
+      b.setAttribute("aria-label", day.long+", "+t.aria+(off?" ("+hh.name+" can't make it)":""));
+      b.title = off ? hh.name+" can't make it" : "";
+    }
+    var n=selected().length;
+    $("calCount").textContent = n ? plural(n,"time","times")+" picked" : "No times picked yet";
+    $("calLegend").textContent = hh ? "Faded = "+hh.name+" can't make it." : "";
+  }
 
-  /* ---------- laps stepper ---------- */
-  var lapsIn=$("rsvp-laps");
-  function readLaps(){ var v=String(lapsIn.value).trim(); if(!/^\d+$/.test(v)) return NaN; return Number(v); }
-  function updateKm(){ var n=readLaps(); $("lapsKm").textContent = (n>=1 && n<=TOTAL) ? "≈ "+km(n)+" km" : "Enter between 1 and "+TOTAL+" laps"; }
-  $("lapsMinus").addEventListener("click",function(){ var n=readLaps(); lapsIn.value=Math.min(TOTAL,Math.max(1,(n||2)-1)); S.dirty=true; updateKm(); $("err-laps").textContent=""; });
-  $("lapsPlus").addEventListener("click",function(){ var n=readLaps(); lapsIn.value=Math.min(TOTAL,Math.max(1,(n||0)+1)); S.dirty=true; updateKm(); $("err-laps").textContent=""; });
+  /* ---------- laps stepper (blank = not sure) ---------- */
+  var lapsIn=$("f-laps");
+  function readLaps(){ var v=String(lapsIn.value).trim(); if(v==="") return 0; if(!/^\d+$/.test(v)) return NaN; return Number(v); }
+  function lapsOk(n){ return n===0 || (n>=1 && n<=TOTAL); }
+  function updateKm(){
+    var n=readLaps();
+    var t = n===0 ? "" : (lapsOk(n) ? "≈ "+km(n)+" km" : "Enter between 1 and "+TOTAL+" laps, or leave it blank.");
+    $("lapsKm").textContent=t; $("lapsKm").hidden=!t;
+  }
+  $("lapsMinus").addEventListener("click",function(){ var n=readLaps(); if(!(n>=0)) n=0; lapsIn.value = n<=1 ? "" : Math.min(TOTAL,n-1); S.dirty=true; updateKm(); $("err-laps").textContent=""; });
+  $("lapsPlus").addEventListener("click",function(){ var n=readLaps(); if(!(n>=0)) n=0; lapsIn.value=Math.min(TOTAL,n+1); S.dirty=true; updateKm(); $("err-laps").textContent=""; });
   lapsIn.addEventListener("input",function(){ S.dirty=true; updateKm(); $("err-laps").textContent=""; });
-  $("rsvp-name").addEventListener("input",function(){ S.dirty=true; $("err-name").textContent=""; });
+  $("f-name").addEventListener("input",function(){ S.dirty=true; $("err-name").textContent=""; });
 
   /* ---------- CTA jump ---------- */
   $("ctaBtn").addEventListener("click",function(e){
     e.preventDefault();
-    $("rsvp").scrollIntoView({behavior: reduce?"auto":"smooth", block:"start"});
-    setTimeout(function(){ try{ $("rsvp-name").focus({preventScroll:true}); }catch(_){} }, reduce?0:450);
+    $("join").scrollIntoView({behavior: reduce?"auto":"smooth", block:"start"});
+    setTimeout(function(){ try{ $("f-name").focus({preventScroll:true}); }catch(_){} }, reduce?0:450);
   });
 
   /* ---------- data cleaning (never trust the payload) ---------- */
   function clean(x){
     x = x || {};
     var laps=Math.round(Number(x.laps));
-    var date = DATES.some(function(t){ return t.id===x.date; }) ? x.date : "any";
+    var want={}; (Array.isArray(x.slots)?x.slots:[]).forEach(function(s){ if(typeof s==="string") want[s]=true; });
     var t = typeof x.createdAt==="number" ? x.createdAt : Date.parse(x.createdAt);
     return {
       id: typeof x.id==="string" ? x.id : String(x.id||""),
       name: typeof x.name==="string" ? x.name.replace(/\s+/g," ").trim().slice(0,40) : "",
-      date: date,
+      slots: SLOT_IDS.filter(function(s){ return want[s]; }),
       laps: Number.isFinite(laps) ? Math.min(Math.max(laps,0),TOTAL) : 0,
+      host: x.host===true,
       createdAt: Number.isFinite(t) ? t : 0
     };
   }
   function sortList(list){
-    return list.filter(function(r){ return r.id && r.name && r.laps>0; })
+    return list.filter(function(r){ return r.id && r.name && r.slots.length>0; })
       .sort(function(a,b){ return (a.createdAt-b.createdAt) || (a.id<b.id?-1:a.id>b.id?1:0); });
   }
   function upsertLocal(raw){
     var r=clean(raw); if(!r.id) return;
-    var next=S.rsvps.filter(function(x){ return x.id!==r.id; }); next.push(r);
-    S.rsvps=sortList(next);
+    var old=findEntry(r.id); if(old && raw && raw.host===undefined) r.host=old.host;
+    var next=S.entries.filter(function(x){ return x.id!==r.id; }); next.push(r);
+    S.entries=sortList(next);
   }
-  function removeLocal(id){ S.rsvps=S.rsvps.filter(function(r){ return r.id!==id; }); }
+  function removeLocal(id){ S.entries=S.entries.filter(function(r){ return r.id!==id; }); }
 
   /* ---------- render: progress ---------- */
   function renderProgress(){
-    var pledged=S.rsvps.reduce(function(a,r){return a+r.laps;},0);
+    var pledged=S.entries.reduce(function(a,r){return a+r.laps;},0);
+    var withLaps=S.entries.filter(function(r){ return r.laps>0; }).length;
+    var unsure=S.entries.length-withLaps;
     var remaining=Math.max(0,TOTAL-pledged);
     var pct=Math.min(100,pledged/TOTAL*100);
-    var n=S.rsvps.length;
     if(remaining>0){
       $("remainNum").textContent=remaining;
       $("remainLabel").textContent= remaining===1 ? "lap to go" : "laps to go";
-      $("remainSub").textContent= n ? (pledged+" of "+TOTAL+" laps pledged by "+n+(n===1?" runner":" runners")+" · "+km(pledged)+" of 42.2 km.") : ("0 of "+TOTAL+" laps pledged so far.");
+      $("remainSub").textContent = withLaps
+        ? (pledged+" of "+TOTAL+" laps pledged by "+plural(withLaps,"person","people")+(unsure?", "+unsure+" not sure yet":"")+".")
+        : ("0 of "+TOTAL+" laps pledged so far"+(unsure?", "+unsure+" not sure yet":"")+".");
     }else{
       $("remainNum").textContent="0";
       $("remainLabel").textContent="laps to go";
       var extra=pledged-TOTAL;
-      $("remainSub").textContent="Marathon covered by "+n+" runners"+(extra>0?(", plus "+extra+" bonus "+(extra===1?"lap":"laps")):"")+".";
+      $("remainSub").textContent="Marathon covered by "+plural(withLaps,"person","people")+(extra>0?(", plus "+plural(extra,"bonus lap","bonus laps")):"")+".";
     }
     $("barFill").style.width=pct+"%";
     $("bar").setAttribute("aria-valuenow",String(Math.min(pledged,TOTAL)));
@@ -617,77 +686,72 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
     $("trackProgress").setAttribute("stroke-dasharray", pct>=100 ? "100 0" : (pct.toFixed(2)+" 100"));
 
     var sync=$("sync"); sync.classList.remove("warn");
-    if(S.status==="loading") sync.textContent="Loading RSVPs…";
-    else if(S.status==="slow"){ sync.textContent="Can't reach the RSVP list yet. It will update when the connection is back."; sync.classList.add("warn"); }
-    else if(S.status==="noconfig"){ sync.textContent="RSVPs aren't connected yet. The organiser needs to set API_URL in config.js."; sync.classList.add("warn"); }
-    else sync.textContent="Live · updated just now";
+    if(S.status==="loading") sync.textContent="Loading…";
+    else if(S.status==="slow"){ sync.textContent="Can't reach the list yet. It will update when the connection is back."; sync.classList.add("warn"); }
+    else if(S.status==="noconfig"){ sync.textContent="Not connected yet. The organiser needs to set API_URL in config.js."; sync.classList.add("warn"); }
+    else sync.textContent="";
+    sync.hidden=!sync.textContent;
   }
 
-  /* ---------- render: tally + list ---------- */
+  /* ---------- render: who's free (heatmap) ---------- */
+  function renderBoard(){
+    var n=S.entries.length, h=host();
+    var who={}; SLOT_IDS.forEach(function(s){ who[s]=[]; });
+    S.entries.forEach(function(r){ r.slots.forEach(function(s){ if(who[s]) who[s].push(r.name); }); });
+
+    var cands=SLOT_IDS.filter(function(s){ return who[s].length>0 && !hostOff(h,s); });
+    var order=cands.slice().sort(function(a,b){ return (who[b].length-who[a].length) || (SLOT_IDS.indexOf(a)-SLOT_IDS.indexOf(b)); });
+    var max=order.length ? who[order[0]].length : 0;
+    var lead={}; order.forEach(function(s){ if(who[s].length===max) lead[s]=true; });
+
+    $("freeSub").textContent = n
+      ? (plural(n,"person","people")+" so far."+(h?" Faded = "+h.name+" can't make it.":""))
+      : (S.status==="loading" ? "Loading…" : "No one yet. Be the first.");
+
+    var bl=$("bestLine"); bl.textContent="";
+    if(order.length){
+      bl.appendChild(document.createTextNode("Best so far: "));
+      bl.appendChild(el("strong",null,slotLabel(order[0])));
+      bl.appendChild(document.createTextNode(" · "+max+" of "+n+" free"));
+    }
+    bl.hidden = !order.length;
+
+    calShell($("hm"), function(d,idx){
+      var c=el("div","hm-day");
+      c.appendChild(dayNum(d,idx));
+      TIMES.forEach(function(t){
+        var s=d.id+"-"+t.id, k=who[s].length, off=hostOff(h,s), pct=n?k/n:0;
+        var x=el("div","hm-slot"+(lead[s]?" lead":"")+(off?" off":"")+(pct>=0.5?" hot":""));
+        x.appendChild(el("small",null,t.tag));
+        x.appendChild(el("span","num",k?String(k):""));
+        x.style.background = k ? "color-mix(in srgb, var(--accent) "+Math.round(15+75*pct)+"%, var(--surface))" : "var(--bg)";
+        var label=d.long+", "+t.word+": "+plural(k,"person","people")+" free"+(k?" ("+who[s].join(", ")+")":"")+(off?". "+h.name+" can't make it":"");
+        x.title=label; x.setAttribute("role","img"); x.setAttribute("aria-label",label);
+        c.appendChild(x);
+      });
+      return c;
+    });
+  }
+
+  /* ---------- render: who's in (name chips; your own open the form) ---------- */
   var armed={};
   function renderList(){
-    var counts={};
-    DATES.forEach(function(d){counts[d.id]=0;});
-    S.rsvps.forEach(function(r){counts[r.date]++;});
-    var maxC=0;
-    DATES.forEach(function(d){ if(d.id!=="any" && counts[d.id]>maxC) maxC=counts[d.id]; });
-    var tops=DATES.filter(function(d){ return d.id!=="any" && maxC>0 && counts[d.id]===maxC; }).map(function(d){ return d.id; });
-    var tied=tops.length>1;
-    var tally=$("tally"); tally.textContent="";
-    DATES.forEach(function(d){
-      var isAny=d.id==="any", isTop=tops.indexOf(d.id)!==-1;
-      var c=el("div","tally-cell"+(isTop?" top":"")+(isAny?" flex":""));
-      if(isTop) c.appendChild(el("span","pill",tied?"Tied":"Leading"));
-      c.appendChild(el("span","tally-day",d.label));
-      var k=counts[d.id];
-      c.appendChild(el("span","tally-meta num", isAny ? (k+" flexible") : (k+(k===1?" vote":" votes"))));
-      var b=el("div","tally-bar"); var i=el("i"); var denom=Math.max(1,S.rsvps.length);
-      i.style.width=(k/denom*100)+"%"; b.appendChild(i); c.appendChild(b);
-      tally.appendChild(c);
-    });
-
-    var pledged=S.rsvps.reduce(function(a,r){return a+r.laps;},0);
-    var n=S.rsvps.length;
-    $("runnersSub").textContent = n ? (n+(n===1?" runner":" runners")+" · "+pledged+" laps · "+km(pledged)+" km pledged") : (S.status==="loading" ? "Loading the start list…" : "No runners yet.");
-
-    var list=$("list"), rows=$("rows");
-    list.classList.toggle("no-actions", ownInList().length===0);
-    rows.textContent="";
-    if(!n){
-      var e=el("div","empty");
-      var loading = S.status==="loading";
-      e.appendChild(el("strong",null, loading ? "Loading…" : "The start list is empty"));
-      e.appendChild(el("span",null, loading ? "Fetching who's signed up." : "Be the first to take a leg."));
-      rows.appendChild(e);
-      return;
-    }
-    S.rsvps.forEach(function(r,idx){
-      var row=el("div","row");
-      var bib=String(idx+1); if(bib.length<2) bib="0"+bib;
-      row.appendChild(el("span","bib num",bib));
+    var box=$("chips"); box.textContent="";
+    box.hidden = !S.entries.length;
+    if(!S.entries.length) return;
+    box.appendChild(el("span","chips-label","Who's in:"));
+    S.entries.forEach(function(r){
       var own=isMine(r.id);
-      var nm=el("span","r-name"); nm.appendChild(el("span",null,r.name));
-      if(own) nm.appendChild(el("span","you","You"));
-      row.appendChild(nm);
-      row.appendChild(el("span","r-date", r.date==="any" ? "Any day" : ("Prefers "+dateLabel(r.date))));
-      var lp=el("span","r-laps num",r.laps+(r.laps===1?" lap":" laps"));
-      lp.appendChild(el("small",null,"≈ "+km(r.laps)+" km"));
-      row.appendChild(lp);
-      var act=el("span","r-actions");
+      var c=el(own?"button":"span","chip");
       if(own){
-        var ed=el("button","btn btn-ghost","Edit"); ed.type="button";
-        ed.setAttribute("aria-label","Edit RSVP for "+r.name);
-        ed.disabled=S.saving;
-        ed.addEventListener("click",function(){ startEdit(r.id); });
-        act.appendChild(ed);
-        var rm=el("button","btn btn-danger"+(armed[r.id]?" armed":""), armed[r.id]?"Confirm":"Remove"); rm.type="button";
-        rm.setAttribute("aria-label",(armed[r.id]?"Confirm removing ":"Remove ")+r.name);
-        rm.disabled=S.saving;
-        rm.addEventListener("click",function(){ removeEntry(r.id); });
-        act.appendChild(rm);
+        c.type="button"; c.title="Edit"; c.disabled=S.saving;
+        c.setAttribute("aria-label","Edit times for "+r.name);
+        c.addEventListener("click",function(){ startEdit(r.id); });
       }
-      row.appendChild(act);
-      rows.appendChild(row);
+      c.appendChild(el("span",null,r.name));
+      if(r.host) c.appendChild(el("span","host","Host"));
+      if(own) c.appendChild(el("span","you","You"));
+      box.appendChild(c);
     });
   }
 
@@ -695,43 +759,47 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
   // Returns the own entry id the form edits, or null for create mode.
   function targetId(){
     if(S.target==="new") return null;
-    if(S.target!=="auto" && isMine(S.target) && findRsvp(S.target)) return S.target;
+    if(S.target!=="auto" && isMine(S.target) && findEntry(S.target)) return S.target;
     var own=ownInList();
     return own.length ? own[0].id : null;
   }
 
   function renderForm(){
+    if(calKey!==FIRST_DAY+"/"+LAST_DAY) buildCal();
     var tid=targetId();
-    var existing=tid ? findRsvp(tid) : null;
+    var existing=tid ? findEntry(tid) : null;
     var own=ownInList();
     var isPrimary = !!existing && own.length>0 && own[0].id===tid;
     var forOther = S.target==="new" && own.length>0;
 
     var key = tid || "new";
     if(S.formFor!==key && (!S.dirty || S.forceFill)){
-      if(existing){ $("rsvp-name").value=existing.name; setDate(existing.date); lapsIn.value=existing.laps||1; }
-      else { $("rsvp-name").value=""; setDate(null); lapsIn.value=4; }
+      S.sel={};
+      if(existing){ $("f-name").value=existing.name; existing.slots.forEach(function(s){ S.sel[s]=true; }); lapsIn.value = existing.laps>0 ? existing.laps : ""; }
+      else { $("f-name").value=""; lapsIn.value=""; }
       S.formFor=key; S.dirty=false; updateKm();
-      $("err-name").textContent=""; $("err-date").textContent=""; $("err-laps").textContent="";
+      $("err-name").textContent=""; $("err-slots").textContent=""; $("err-laps").textContent="";
     }
     S.forceFill=false;
 
     var heading, submit, nameLabel, removeText;
     if(!existing){
-      heading = forOther ? "Sign up someone else" : "Count me in";
-      submit = forOther ? "Add runner" : "Save my RSVP";
-      nameLabel = forOther ? "Runner's name" : "Your name";
+      heading = forOther ? "Add someone else" : "";
+      submit = forOther ? "Add them" : "I'm down";
+      nameLabel = forOther ? "Their name" : "Your name";
     }else if(isPrimary){
-      heading="Your RSVP"; submit="Update my RSVP"; nameLabel="Your name"; removeText="Remove me";
+      heading="Your times"; submit="Update my times"; nameLabel="Your name"; removeText="Remove me";
     }else{
-      heading="Edit "+existing.name+"'s RSVP"; submit="Save changes"; nameLabel="Runner's name"; removeText="Remove runner";
+      heading="Edit "+existing.name+"'s times"; submit="Save changes"; nameLabel="Their name"; removeText="Remove them";
     }
     $("formHeading").textContent=heading;
+    $("formHeading").hidden=!heading;
     $("submitBtn").textContent = S.saving ? "Saving…" : submit;
     $("nameLabel").textContent=nameLabel;
     $("otherBtn").hidden = !existing;
+    $("formTop").hidden = !heading && !existing;
     $("cancelBtn").hidden = !(own.length>0 && (!existing || !isPrimary));
-    $("cancelBtn").textContent = existing ? "Back to my RSVP" : "Cancel";
+    $("cancelBtn").textContent = existing ? "Back to my times" : "Cancel";
     var rb=$("removeBtn");
     rb.hidden = !existing;
     if(existing){
@@ -742,12 +810,13 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
     var off = S.saving || S.status==="noconfig";
     var ctrls=$("form").querySelectorAll("input,button");
     for(var j=0;j<ctrls.length;j++){
-      if(ctrls[j].id==="rsvp-website") continue;
+      if(ctrls[j].id==="f-website") continue;
       ctrls[j].disabled = off;
     }
+    updateCal();
   }
 
-  function render(){ renderProgress(); renderList(); renderForm(); }
+  function render(){ renderProgress(); renderBoard(); renderList(); renderForm(); }
 
   /* ---------- API ---------- */
   var writeSeq=0;           // bumps on every write so older reads can't overwrite newer state
@@ -764,12 +833,13 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
     fetch(API_URL, {cache:"no-store", signal: ctrl ? ctrl.signal : undefined})
       .then(function(res){ return res.json(); })
       .then(function(d){
-        if(!d || d.ok!==true || !Array.isArray(d.rsvps)) throw new Error("bad response");
+        if(!d || d.ok!==true || !Array.isArray(d.entries)) throw new Error("bad response");
         lastRead=Date.now();
         S.status="live";
+        if(d.firstDay!==FIRST_DAY || d.lastDay!==LAST_DAY) setRange(d.firstDay, d.lastDay);
         if(seq===writeSeq && !S.saving){
-          S.rsvps=sortList(d.rsvps.map(clean));
-          Object.keys(armed).forEach(function(id){ if(!findRsvp(id)) delete armed[id]; });
+          S.entries=sortList(d.entries.map(clean));
+          Object.keys(armed).forEach(function(id){ if(!findEntry(id)) delete armed[id]; });
         }else readAgain=true;
       })
       .catch(function(){ S.status="slow"; })
@@ -789,13 +859,13 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
   }
 
   var FALLBACK = {
-    duplicate_name: "That name is already on the list. Add a surname initial, or edit your existing RSVP.",
-    invalid_name: "Add a name so others know who's running.",
-    invalid_date: "Pick one of the listed days.",
-    invalid_laps: "Enter between 1 and "+TOTAL+" laps.",
-    forbidden: "This RSVP can only be changed from the device that created it.",
-    not_found: "That RSVP is no longer on the list.",
-    full: "The RSVP list is full. Ask the organiser.",
+    duplicate_name: "That name is already on the list. Add a surname initial, or edit your existing entry.",
+    invalid_name: "Add a name so others know who's free.",
+    invalid_slots: "Pick at least one morning or evening you're free.",
+    invalid_laps: "Leave laps blank, or enter between 1 and "+TOTAL+".",
+    forbidden: "This entry can only be changed from the device that created it.",
+    not_found: "That entry is no longer on the list.",
+    full: "The list is full. Ask the organiser.",
     rate_limited: "Too many saves just now. Wait a minute and try again.",
     busy: "The list is busy. Try again in a few seconds."
   };
@@ -804,10 +874,10 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
     if(res && typeof res.message==="string" && res.message) return res.message;
     return (res && FALLBACK[res.error]) || NETWORK_MSG;
   }
-  var FIELD_FOR = { duplicate_name:"rsvp-name", invalid_name:"rsvp-name", invalid_laps:"rsvp-laps" };
+  var FIELD_FOR = { duplicate_name:"f-name", invalid_name:"f-name", invalid_laps:"f-laps" };
 
   function msg(text, kind){ var m=$("msg"); m.textContent=text||""; m.className="msg"+(kind?" "+kind:""); }
-  function scrollToForm(){ $("rsvp").scrollIntoView({behavior: reduce?"auto":"smooth", block:"start"}); }
+  function scrollToForm(){ $("join").scrollIntoView({behavior: reduce?"auto":"smooth", block:"start"}); }
 
   /* ---------- actions ---------- */
   function startEdit(id){
@@ -816,44 +886,44 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
   }
   $("otherBtn").addEventListener("click",function(){
     S.target="new"; S.forceFill=true; msg(""); render();
-    try{ $("rsvp-name").focus(); }catch(_){}
+    try{ $("f-name").focus(); }catch(_){}
   });
   $("cancelBtn").addEventListener("click",function(){ S.target="auto"; S.forceFill=true; msg(""); render(); });
 
   $("form").addEventListener("submit",function(e){
     e.preventDefault();
     if(S.saving || !API_URL) return;
-    var name=$("rsvp-name").value.replace(/\s+/g," ").trim().slice(0,40);
-    var date=getDate();
+    var name=$("f-name").value.replace(/\s+/g," ").trim().slice(0,40);
+    var slots=selected();
     var laps=readLaps();
     var ok=true, first=null;
-    $("err-name").textContent=""; $("err-date").textContent=""; $("err-laps").textContent="";
-    if(!name){ $("err-name").textContent="Add a name so others know who's running."; ok=false; first=first||$("rsvp-name"); }
-    if(!date){ $("err-date").textContent="Pick the day that works best for you."; ok=false; first=first||dateOpts.querySelector("input"); }
-    if(!(laps>=1 && laps<=TOTAL)){ $("err-laps").textContent="Enter between 1 and "+TOTAL+" laps."; ok=false; first=first||lapsIn; }
+    $("err-name").textContent=""; $("err-slots").textContent=""; $("err-laps").textContent="";
+    if(!name){ $("err-name").textContent="Add a name so others know who's free."; ok=false; first=first||$("f-name"); }
+    if(!slots.length){ $("err-slots").textContent="Pick at least one morning or evening you're free."; ok=false; first=first||$("cal").querySelector(".slot"); }
+    if(!lapsOk(laps)){ $("err-laps").textContent="Enter between 1 and "+TOTAL+" laps, or leave it blank."; ok=false; first=first||lapsIn; }
     if(!ok){ msg(""); if(first) try{ first.focus(); }catch(_){} return; }
 
     var tid=targetId();
-    var existing=tid ? findRsvp(tid) : null;
+    var existing=tid ? findEntry(tid) : null;
     var own=ownInList();
     var wasOther = !tid && own.length>0;
     var wasPrimary = !!tid && own.length>0 && own[0].id===tid;
     var payload = tid
-      ? {action:"update", id:tid, editToken:tokenFor(tid), name:name, date:date, laps:laps}
-      : {action:"create", name:name, date:date, laps:laps, website:$("rsvp-website").value};
+      ? {action:"update", id:tid, editToken:tokenFor(tid), name:name, slots:slots, laps:laps}
+      : {action:"create", name:name, slots:slots, laps:laps, website:$("f-website").value};
 
     S.saving=true; writeSeq++; msg("Saving…"); render();
     post(payload).then(function(res){
       if(res && res.ok===true){
         if(tid){
-          upsertLocal(res.rsvp || {id:tid, name:name, date:date, laps:laps, createdAt:existing?existing.createdAt:Date.now()});
-          msg(wasPrimary ? "Updated. See you on the track!" : (name+"'s RSVP is updated."), "ok");
+          upsertLocal(res.entry || {id:tid, name:name, slots:slots, laps:laps, createdAt:existing?existing.createdAt:Date.now()});
+          msg(wasPrimary ? "Updated. Thanks!" : (name+"'s times are updated."), "ok");
         }else{
           if(typeof res.id==="string" && typeof res.editToken==="string"){
             addMine(res.id, res.editToken);
-            if(res.rsvp) upsertLocal(res.rsvp);
+            if(res.entry) upsertLocal(res.entry);
           }
-          msg(wasOther ? (name+" is on the start list.") : "You're in! See you on the track.", "ok");
+          msg(wasOther ? (name+"'s times are in.") : "Thanks, you're in!", "ok");
           S.target="auto";
         }
         S.dirty=false; S.forceFill=true;
@@ -878,7 +948,7 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
       return;
     }
     delete armed[id];
-    var r=findRsvp(id);
+    var r=findEntry(id);
     var own=ownInList();
     var wasPrimary = own.length>0 && own[0].id===id;
     S.saving=true; writeSeq++; msg("Removing…"); render();
@@ -887,7 +957,7 @@ footer{padding:28px 0 48px;color:var(--muted);font-size:.88rem;border-top:1px so
         dropMine(id); removeLocal(id);
         if(S.target===id) S.target="auto";
         S.dirty=false; S.forceFill=true;
-        msg(wasPrimary ? "You've been removed from the start list." : ((r?r.name:"Runner")+" has been removed."), "ok");
+        msg(wasPrimary ? "You've been removed from the list." : ((r?r.name:"They")+" has been removed."), "ok");
       }else{
         msg(serverMsg(res),"err");
       }
